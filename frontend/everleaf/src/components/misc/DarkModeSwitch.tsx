@@ -8,8 +8,8 @@ export default function DarkModeSwitch() {
 
     // load local item
     useEffect(() => {
-        const json = localStorage.getItem("isDarkmode");
-        if (json) setdarkMode(JSON.parse(json));
+        const jsonItem = localStorage.getItem("isDarkmode");
+        if (jsonItem) setdarkMode(JSON.parse(jsonItem));
     }, []);
 
     // on change, do this
@@ -19,7 +19,7 @@ export default function DarkModeSwitch() {
     }, [darkMode]);
 
     return (
-        <div>
+        <div onClick={() => setdarkMode(!)}>
             {
                 (darkMode)
                 ? <div><LuSunDim/></div>
