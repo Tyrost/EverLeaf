@@ -19,6 +19,16 @@ client = MongoClient(
 )
 
 db = client["db"]
+test = db["test"]
+
+# Test seeder
+if test.count_documents({}) == 0:
+    test_data = [
+        {"name": "Alice", "email": "alice@example.com"},
+        {"name": "Bob", "email": "bob@example.com"},
+        {"name": "Charlie", "email": "charlie@example.com"},
+    ]
+    test.insert_many(test_data)
 
 @app.route("/")
 def index():
