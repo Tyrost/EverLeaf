@@ -6,7 +6,7 @@ import { LuSunDim, LuMoon } from "react-icons/lu";
 export default function DarkModeSwitch() {
     const [darkMode, setdarkMode] = useState<boolean>(false)
 
-    // load local item
+    // load local item if user has visited site
     useEffect(() => {
         const jsonItem = localStorage.getItem("isDarkmode");
         if (jsonItem) setdarkMode(JSON.parse(jsonItem));
@@ -19,12 +19,12 @@ export default function DarkModeSwitch() {
     }, [darkMode]);
 
     return (
-        <div onClick={() => setdarkMode(!)}>
+        <button onClick={() => setdarkMode(!darkMode)} className="bg-neutral-50 dark:bg-neutral-900">
             {
                 (darkMode)
-                ? <div><LuSunDim/></div>
-                : <div><LuMoon/></div>
+                ? <div><LuSunDim className="text-6xl"/></div>
+                : <div><LuMoon className="text-6xl"/></div>
             }
-        </div>
+        </button>
     )
 };
