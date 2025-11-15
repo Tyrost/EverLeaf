@@ -9,7 +9,6 @@
   --foreground: #171717;
 
   --font-redhat: "Red Hat Display";
-  --font-elms: "Elms Sans";
   --font-outfit: "Outfit";
 }
 
@@ -22,7 +21,6 @@
   --font-mono: var(--font-geist-mono);
 
   --font-redhat: var(--font-redhat);
-  --font-elms: var(--font-elms);
   --font-outfit: var(--font-outfit);
 }
 /* for creating new tailwind styles */
