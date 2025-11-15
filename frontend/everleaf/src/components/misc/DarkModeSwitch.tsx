@@ -19,7 +19,7 @@ export default function DarkModeSwitch() {
     }, [darkMode]);
 
     return (
-        <button onClick={() => setdarkMode(!darkMode)} className="bg-neutral-50 dark:bg-neutral-900">
+        <button onClick={() => setdarkMode(!darkMode)} className="bg-neutral-50 dark:bg-neutral-900 transition-colors">
             {
                 (darkMode)
                 ? <div><LuSunDim className="text-6xl text-neutral-0"/></div>
