@@ -24,7 +24,7 @@ const UserMainPanelProp = ({ isLogged }: { isLogged: boolean }) => {
                     </>
                     ) : (
                     <>
-                        <li className="px-4 py-2 hover:bg-gray-100">Create Account</li>
+                        <li className="px-4 py-2 hover:bg-gray-100" onClick={() => router.push("/")}>Create Account</li>
 
                         <div className="w-full h-[1px] border border-black/20 my-2"></div>
 
