@@ -1,6 +1,6 @@
 'use client';
 
-import {useUser} from "@/app/control/user/UserState"
+import {useUser} from "@/control/user/UserState"
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import UserMainPanelProp from "./UserMainButtonPanelProp";
