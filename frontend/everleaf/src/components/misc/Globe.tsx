@@ -7,12 +7,12 @@ export default function Globe() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const kSPINVELOCITY: number = 4;
 
+    let size = 1000
+
     useEffect(() => {
         if (!canvasRef.current) return;
 
         let phi: number = 0;
-
-        let size: number = 1000;
 
         const globe = createGlobe(canvasRef.current, {
             devicePixelRatio: 2,
@@ -21,7 +21,7 @@ export default function Globe() {
             width: size*2,
             height: size*2,
             phi: 0,
-            theta: 0,
+            theta: 0.50,
             dark: 1,
             diffuse: 1.2,
             mapSamples: 16000,
@@ -35,7 +35,7 @@ export default function Globe() {
             ],
             onRender: (state) => {
                 state.phi = phi;
-                phi += 0.001 * kSPINVELOCITY;
+                phi += 0.0005 * kSPINVELOCITY;
             },
         });
 
@@ -46,6 +46,6 @@ export default function Globe() {
 
     return (
         // must share the same number!
-        <canvas ref={canvasRef} className="w-[1000px] h-[1000px]"/>
+        <canvas ref={canvasRef} style={{ width: `${size}px`, height: `${size}px` }}/>
     );
 }

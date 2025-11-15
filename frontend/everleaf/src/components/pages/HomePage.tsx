@@ -5,7 +5,7 @@ export default function HomePage() {
         <>
             <div className="">
                 <div className="relative h-screen overflow-hidden">
-                    <div className="absolute translate-y-6 top-0 -right-32 -z-10 pointer-events-none">
+                    <div className="absolute top-1/2 -right-60 -translate-y-1/2 pt-[50px]">
                         <Globe />
                     </div>
 
