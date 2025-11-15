@@ -1,0 +1,33 @@
+.svg-wrapper {
+    position: relative;
+    width: 150px;
+    cursor: pointer;
+    display: flex;              /* Add flexbox */
+    align-items: center;        /* Vertical center */
+    justify-content: center;    /* Horizontal center */
+}
+  
+.shape {
+    stroke-dasharray: 140 480; /* Adjusted for rectangle perimeter (120+45)*2 = 330 */
+    stroke-dashoffset: -425;   /* Adjusted accordingly */
+    stroke-width: 4px;
+    fill: transparent;
+    stroke: #C7C7C7;
+    transition: stroke-width 2s, stroke-dashoffset 2s, stroke-dasharray 3.2s;
+}
+
+.text {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: #fff;
+    position: absolute;          /* Position over the SVG */
+    z-index: 10;                 /* Above SVG */
+    pointer-events: none;
+}
+
+.shape:hover {
+    stroke-width: 1px;
+    stroke-dashoffset: 0;
+    stroke-dasharray: 330;      /* Total perimeter: (120+45)*2 = 330 */
+}
