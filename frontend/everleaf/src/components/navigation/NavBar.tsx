@@ -11,10 +11,10 @@ const NavBar = () => {
 
     return (
         <>
-        <div className="fixed absolute top-0 w-full h-[100px] border border-white backdrop-blur-lg bg-white/10">
+        <div className="fixed absolute top-0 w-full h-[100px] backdrop-blur-lg bg-white/10 z-10">
         <div className="flex flex-cols h-full items-center">
             <div className="flex w-full p-5 gap-x-[2%] justify-left">
-                <MainButton label="Home" onClick={() => {router.push("/")}}/>
+                <EverLeafLogo/>
                 <MainButton label="Our Mission" onClick={() => {router.push("/mission")}}/>
                 <MainButton label="About Us" onClick={() => {router.push("/")}}/>
                 <MainButton label="Contact" onClick={() => {router.push("/")}}/>
