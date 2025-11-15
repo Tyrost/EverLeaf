@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Red_Hat_Display, Elms_Sans, Outfit } from "next/font/google";
 import "./globals.css";
+
+// Chosen Main Fonts
+
+const redhat = Red_Hat_Display({subsets: ["latin"], variable: "--font-redhat", weight: ["300", "500", "700"]})
+const elms = Elms_Sans({subsets: ["latin"], variable: "--font-elms", weight: ["100", "300", "500"]})
+const outfit = Outfit({subsets: ["latin"], variable: "--font-outfit", weight: ["100", "200", "300", "500", "800"]})
+
+// ------------------------------------------------------------------------------------------------
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +33,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} 
+        ${redhat.variable} ${elms.variable} ${outfit.variable} antialiased`}
       >
         {children}
       </body>
