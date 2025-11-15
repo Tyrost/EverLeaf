@@ -1,4 +1,4 @@
-'use client';
+
 import { useState, useEffect } from "react"
 import type { User } from "../types/User";
 
@@ -6,7 +6,8 @@ export const useUser = () => {
     const [user, setUser] = useState<User>({
         userName: "",
         isLogged: false,
-        lastLogged: ""
+        lastLogged: "",
+        userImagePath: ""
     })
 
     useEffect(() => {
