@@ -6,8 +6,7 @@ export default function Home() {
   return (
     <>
       <div>
-        
-        <Globe />
+        <DarkModeSwitch/>
       </div>
     </>
   );
