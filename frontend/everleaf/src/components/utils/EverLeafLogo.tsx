@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+
 const EverLeafLogo = ({redirect = true, theme = "dark", size = [100, 100]} : { redirect?: boolean, theme?: "dark"|"light", size?: [number, number]}) => {
     const router = useRouter();
     const path = theme === "dark"? "/everleaf_logo/WhiteLogo.png" : "/everleaf_logo/BlackLogo.png"
