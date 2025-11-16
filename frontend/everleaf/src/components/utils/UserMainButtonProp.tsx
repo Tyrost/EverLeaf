@@ -29,7 +29,7 @@ const UserMainButtonProp = () => {
         <div className="flex items-center gap-4 relative z-10">
         {/* Avatar */}
         <div
-            className="w-[50px] h-[50px] border border-white/25 rounded-full mx-10 cursor-pointer"
+            className="w-[50px] h-[50px] border border-white/25 hover:border-white/40 transition-colors rounded-full mx-10 cursor-pointer"
             onClick={() => setOpen(!open)}
         >
             <Image

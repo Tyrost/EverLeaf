@@ -163,7 +163,7 @@ export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 mb-6">
                     <div>
                         <label className="block text-sm font-semibold text-secondary-text mb-2">
-                            X-Axis Variable
+                            X-Axis
                         </label>
                         <select
                             value={xAxis}
@@ -185,7 +185,7 @@ export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
 
                     <div>
                         <label className="block text-sm font-semibold text-secondary-text mb-2">
-                            Y-Axis Variable
+                            Y-Axis
                         </label>
                         <select
                             value={yAxis}
