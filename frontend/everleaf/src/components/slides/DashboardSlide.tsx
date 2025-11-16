@@ -103,14 +103,14 @@ const DashboardSlide = () => {
                         {/* Divider */}
                         <div className="flex items-center justify-center py-[5%] gap-4">
                             <div className="flex-1 bg-border h-px max-w-[30%]" />
-                            <h1 className="text-text-secondary font-outfit whitespace-nowrap">
+                            <h1 className="text-secondary-text font-outfit whitespace-nowrap">
                                 Configuration
                             </h1>
                             <div className="flex-1 bg-border h-px max-w-[30%]" />
                         </div>
 
                         {/* Settings */}
-                        <ul className="flex flex-col font-outfit text-[19px] gap-[1vh] m-[5%]">
+                        <ul className="flex flex-col font-outfit text-[19px] text-secondary-text gap-[1vh] m-[5%]">
                             <ConfigTab label="Account" route="/account" />
                             <ConfigTab label="FAQ" route="/faq" />
                             <ConfigTab label="Privacy & Policy" route="/privacy-policy" />
