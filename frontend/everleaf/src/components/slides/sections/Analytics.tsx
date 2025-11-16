@@ -1,5 +1,5 @@
 import LinePlot, { LinePlotPoint } from "@/components/dashboards/LinePlot";
-import { kFieldTypes } from "@/components/dashboards/CommonChartData";
+// import { kFieldTypes } from "@/components/dashboards/CommonChartData";
 
 export const AnalyticsPage = () => {
     const fields: LinePlotPoint[] = [
@@ -22,7 +22,7 @@ export const AnalyticsPage = () => {
 
     return (
         <>
-            <LinePlot data={fields} fields={kFieldTypes} />
+            {/* <LinePlot data={fields} fields={kFieldTypes} /> */}
         </>
     );
 };

@@ -1,45 +1,95 @@
-'use client';
+"use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
 import { CHART_COLORS } from "./CommonChartData";
+import { DataTypeEnum } from "./CommonChartData";
+import { ScatterPlotFetch } from "@/control/types/Chart";
+import { fetchScatter } from "@/control/fetch/charts";
 
+export default function ScatterPlot() {
+    const [scatterData, setScatterData] = useState<[number, number][]>([]);
+    const [loading, setLoading] = useState(true);
+    const [mounted, setMounted] = useState(false);
+    const [fieldX, setFieldX] = useState<DataTypeEnum>(DataTypeEnum.RainfallMM);
+    const [fieldY, setFieldY] = useState<DataTypeEnum>(
+        DataTypeEnum.HumidityPercent,
+    );
 
-interface DataPoint {
-    "soilmoisture%": number;
-    "soil_pH": number;
-    "temperature_C": number;
-    "rainfallmm": number;
-    "humidity%": number;
-    "sunlight_hours": number;
-    "pesticide_usage_ml": number;
-    "total_days": number;
-    "yield_kg_per_hectare": number;
-    "latitude": number;
-    "longitude": number;
-    "NDVI_index": number;
-}
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
-interface ScatterPlotProps {
-    data: DataPoint[];
-    fields: string[];
-}
+    useEffect(() => {
+        if (!mounted) return;
 
-export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
-    const chartData = data;
-    const [xAxis, setXAxis] = useState<keyof DataPoint>("temperature_C");
-    const [yAxis, setYAxis] = useState<keyof DataPoint>("yield_kg_per_hectare");
+        async function load() {
+            setLoading(true);
+            try {
+                const result: ScatterPlotFetch = await fetchScatter({
+                    field_x: fieldX.valueOf(),
+                    field_y: fieldY.valueOf(),
+                });
+                console.log(result);
+                if (result && result.x && result.y) {
+                    const data = result;
+                    const pairs: [number, number][] = data.x.map((
+                        xValue,
+                        index,
+                    ) => [
+                        xValue,
+                        data.y[index],
+                    ]);
+                    setScatterData(pairs);
+                } else {
+                    console.log("Invalid data structure:", result);
+                    setScatterData([]);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                setScatterData([]);
+            } finally {
+                setLoading(false);
+            }
+        }
+        load();
+    }, [fieldX, fieldY, mounted]);
 
-    // Prepare scatter data
-    const scatterData = chartData.map((point) => [
-        point[xAxis],
-        point[yAxis],
-    ]);
+    // Don't render until mounted on client
+    if (!mounted) {
+        return (
+            <div className="p-6 min-h-screen font-sans">
+                <div className="bg-secondary rounded-xl p-6 shadow-2xl max-w-7xl mx-auto border border-border">
+                    <h2 className="text-2xl font-bold text-primary-text mb-5 mt-0">
+                        Agricultural Data Analysis
+                    </h2>
+                    <div
+                        className="flex items-center justify-center"
+                        style={{ height: "500px" }}
+                    >
+                        <div className="text-center">
+                            <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4">
+                            </div>
+                            <p className="text-secondary-text">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    // Calculate stats from transformed data
+    const xValues = scatterData.map((d) => d[0]);
+    const yValues = scatterData.map((d) => d[1]);
+    const xMin = xValues.length > 0 ? Math.min(...xValues) : 0;
+    const xMax = xValues.length > 0 ? Math.max(...xValues) : 0;
+    const yMin = yValues.length > 0 ? Math.min(...yValues) : 0;
+    const yMax = yValues.length > 0 ? Math.max(...yValues) : 0;
 
     const option = {
         backgroundColor: "transparent",
         title: {
-            text: `${yAxis} vs ${xAxis}`,
+            text: `${fieldY.valueOf()} vs ${fieldX.valueOf()}`,
             left: "center",
             top: 10,
             textStyle: {
@@ -55,9 +105,9 @@ export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
             borderWidth: 1,
             textStyle: { color: CHART_COLORS.tooltipText },
             formatter: (params: any) => {
-                return `${xAxis}: ${params.value[0].toFixed(2)}<br/>${yAxis}: ${
-                    params.value[1].toFixed(2)
-                }`;
+                return `${fieldX.valueOf()}: ${
+                    params.value[0].toFixed(2)
+                }<br/>${fieldY.valueOf()}: ${params.value[1].toFixed(2)}`;
             },
         },
         grid: {
@@ -69,7 +119,7 @@ export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
         },
         xAxis: {
             type: "value",
-            name: xAxis,
+            name: fieldX,
             nameLocation: "middle",
             nameGap: 30,
             nameTextStyle: {
@@ -95,7 +145,7 @@ export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
         },
         yAxis: {
             type: "value",
-            name: yAxis,
+            name: fieldY,
             nameLocation: "middle",
             nameGap: 50,
             nameTextStyle: {
@@ -154,7 +204,7 @@ export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
 
     return (
         <div className="p-6 min-h-screen font-sans">
-            <div className="bg-secondary rounded-xl p-6 shadow-2xl max-w-screen-xl mx-auto border border-border">
+            <div className="bg-secondary rounded-xl p-6 shadow-2xl max-w-7xl mx-auto border border-border">
                 <h2 className="text-2xl font-bold text-primary-text mb-5 mt-0">
                     Agricultural Data Analysis
                 </h2>
@@ -166,16 +216,17 @@ export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
                             X-Axis
                         </label>
                         <select
-                            value={xAxis}
+                            value={fieldX}
                             onChange={(e) =>
-                                setXAxis(e.target.value as keyof DataPoint)}
+                                setFieldX(e.target.value as DataTypeEnum)}
                             className="w-full px-3 py-2.5 rounded-lg border border-border text-sm text-primary-text cursor-pointer bg-tertiary"
+                            disabled={loading}
                         >
-                            {fields.map((field) => (
+                            {Object.values(DataTypeEnum).map((field) => (
                                 <option
                                     key={field}
                                     value={field}
-                                    disabled={field === yAxis}
+                                    disabled={field === fieldY}
                                 >
                                     {field}
                                 </option>
@@ -188,16 +239,17 @@ export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
                             Y-Axis
                         </label>
                         <select
-                            value={yAxis}
+                            value={fieldY}
                             onChange={(e) =>
-                                setYAxis(e.target.value as keyof DataPoint)}
+                                setFieldY(e.target.value as DataTypeEnum)}
                             className="w-full px-3 py-2.5 rounded-lg border border-border text-sm text-primary-text cursor-pointer bg-tertiary"
+                            disabled={loading}
                         >
-                            {fields.map((field) => (
+                            {Object.values(DataTypeEnum).map((field) => (
                                 <option
                                     key={field}
                                     value={field}
-                                    disabled={field === xAxis}
+                                    disabled={field === fieldX}
                                 >
                                     {field}
                                 </option>
@@ -206,50 +258,72 @@ export default function ScatterPlot({ data, fields }: ScatterPlotProps) {
                     </div>
                 </div>
 
-                {/* Chart */}
-                <ReactECharts
-                    option={option}
-                    style={{ height: "500px", width: "100%" }}
-                    opts={{ renderer: "canvas" }}
-                />
+                {/* Chart or Loading State */}
+                {loading
+                    ? (
+                        <div
+                            className="flex items-center justify-center"
+                            style={{ height: "500px" }}
+                        >
+                            <div className="text-center">
+                                <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4">
+                                </div>
+                                <p className="text-secondary-text">
+                                    Loading data...
+                                </p>
+                            </div>
+                        </div>
+                    )
+                    : scatterData.length > 0
+                    ? (
+                        <ReactECharts
+                            option={option}
+                            style={{ height: "500px", width: "100%" }}
+                            opts={{ renderer: "canvas" }}
+                        />
+                    )
+                    : (
+                        <div
+                            className="flex items-center justify-center"
+                            style={{ height: "500px" }}
+                        >
+                            <p className="text-secondary-text">
+                                No data available
+                            </p>
+                        </div>
+                    )}
 
                 {/* Stats */}
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 mt-6 pt-6 border-t border-border">
-                    <div className="text-center">
-                        <div className="text-xs text-secondary-text mb-1">
-                            Data Points
+                {!loading && scatterData.length > 0 && (
+                    <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 mt-6 pt-6 border-t border-border">
+                        <div className="text-center">
+                            <div className="text-xs text-secondary-text mb-1">
+                                X Range
+                            </div>
+                            <div className="text-xl font-bold text-primary-text">
+                                {xMin.toFixed(1)} - {xMax.toFixed(1)}
+                            </div>
                         </div>
-                        <div className="text-xl font-bold text-primary-text">
-                            {chartData.length}
+
+                        <div className="text-center">
+                            <div className="text-xs text-secondary-text mb-1">
+                                Y Range
+                            </div>
+                            <div className="text-xl font-bold text-primary-text">
+                                {yMin.toFixed(1)} - {yMax.toFixed(1)}
+                            </div>
                         </div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-xs text-secondary-text mb-1">
-                            X Range
-                        </div>
-                        <div className="text-xl font-bold text-primary-text">
-                            {Math.min(...scatterData.map((d) => d[0])).toFixed(
-                                1,
-                            )} -{" "}
-                            {Math.max(...scatterData.map((d) => d[0])).toFixed(
-                                1,
-                            )}
-                        </div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-xs text-secondary-text mb-1">
-                            Y Range
-                        </div>
-                        <div className="text-xl font-bold text-primary-text">
-                            {Math.min(...scatterData.map((d) => d[1])).toFixed(
-                                1,
-                            )} -{" "}
-                            {Math.max(...scatterData.map((d) => d[1])).toFixed(
-                                1,
-                            )}
+
+                        <div className="text-center">
+                            <div className="text-xs text-secondary-text mb-1">
+                                Data Points
+                            </div>
+                            <div className="text-xl font-bold text-primary-text">
+                                {scatterData.length}
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );
