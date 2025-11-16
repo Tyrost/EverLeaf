@@ -20,7 +20,6 @@ export const fetchScatter = async ({
         if (!response.ok) {
             throw new Error(`HTTP error fetchScatter. Status: ${response.status}`);
         }
-
         const json = await response.json();
 
         // FIX: return only the x/y arrays
