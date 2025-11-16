@@ -36,7 +36,7 @@ class Commander(Connection):
         })
         
         return {"message": "Profile created", "userId": user_id}, 200
-
+    
     # Farm Routes
     def get_all_farms(self):
         return list(self.farming_data.find({}, {"_id": 0}))
