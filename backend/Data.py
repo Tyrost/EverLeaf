@@ -53,8 +53,8 @@ class Data:
             return False
         
         return {
-            "x": self.farm_df[x],
-            "y": self.farm_df[y]
+            "x": list(self.farm_df[x]),
+            "y": list(self.farm_df[y])
         }
 
     def linear_regression(self, feature_x, feature_y, x_value):
@@ -68,18 +68,18 @@ class Data:
         std_y = np.std(y)
 
         r = np.corrcoef(x, y)[0][1]
-        b_hat = r * (std_y/std_x)
-        a_hat = y_bar - b_hat*x_bar
+        b_hat = r * (std_y / std_x)
+        a_hat = y_bar - b_hat * x_bar
 
-        predict = lambda x: a_hat + b_hat * x
+        # predictor (local only)
+        predict = lambda val: a_hat + b_hat * val
         
         predictive_vals = []
         predicted_vals = []
 
         step_up = (max(x) - min(x)) * 0.03
-
         bound = predict(max(x)) * 1.20
-        
+
         current_x = x_value
         current_y = predict(current_x)
 
@@ -88,10 +88,15 @@ class Data:
             predicted_vals.append(current_y)
             current_x += step_up
             current_y = predict(current_x)
-        
-        new = len(predictive_vals)
-        
-        return [list(x) + predictive_vals, list(y) + predicted_vals, new]
+            
+        return [
+            list(x) + predictive_vals,
+            list(y) + predicted_vals,
+            len(predictive_vals)
+        ]
+
     
     def set_ranges(self, feature_x):
-        return np.min(self.farm_df[feature_x]), np.max(self.farm_df[feature_x]) * 1.5
+        return [np.min(self.farm_df[feature_x]), np.max(self.farm_df[feature_x]) * 1.5]
+    
+print(Data().linear_regression("NDVI_index", "yield_kg_per_hectare", 150))
