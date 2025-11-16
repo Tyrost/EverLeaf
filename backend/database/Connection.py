@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import certifi
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv("/Users/danielcorzo/Documents/GitHub/EverLeaf/backend/.env")
 
 class Connection:
 
@@ -15,7 +15,6 @@ class Connection:
 
     def __init_conn(self):
         MONGO_URI = os.getenv("MONGO_URI")
-
         return MongoClient(
             MONGO_URI,
             tls=True,
