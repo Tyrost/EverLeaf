@@ -16,26 +16,9 @@ export default function ScatterPlot() {
         DataTypeEnum.HumidityPercent,
     );
 
-<<<<<<< HEAD
     useEffect(() => {
         setMounted(true);
     }, []);
-=======
-interface DataPoint {
-    "soil_moisture_%": number;
-    "soil_pH": number;
-    "temperature_C": number;
-    "rainfallmm": number;
-    "humidity%": number;
-    "sunlight_hours": number;
-    "pesticide_usage_ml": number;
-    "total_days": number;
-    "yield_kg_per_hectare": number;
-    "latitude": number;
-    "longitude": number;
-    "NDVI_index": number;
-}
->>>>>>> 8c3e6b0 (.)
 
     useEffect(() => {
         if (!mounted) return;
