@@ -15,13 +15,13 @@ function hexToRgbString(
 }
 export const VeryImportantText: React.FC<React.PropsWithChildren> = (
     { children },
-) => <h2 className="text-9xl font-bold text-shadow-brand">{children}</h2>;
+) => <h2 className="text-9xl font-bold drop-shadow-[0_2px_1.2px_rgba(0,0,0,0.8)]">{children}</h2>;
 export const ImportantText: React.FC<React.PropsWithChildren> = (
     { children },
-) => <h2 className="text-6xl font-bold text-neon-green">{children}</h2>;
+) => <h2 className="text-6xl font-bold rop-shadow-[0_2px_1.2px_rgba(0,0,0,0.8)]">{children}</h2>;
 export const SemiImportantText: React.FC<React.PropsWithChildren> = (
     { children },
-) => <h4 className="text-3xl font-bold text-neon-green">{children}</h4>;
+) => <h4 className="text-3xl font-bold rop-shadow-[0_2px_1.2px_rgba(0,0,0,0.8)]">{children}</h4>;
 export const MinorText: React.FC<React.PropsWithChildren> = ({ children }) => (
     <h5 className="text-md text-gray-400 mt-2">{children}</h5>
 );
