@@ -58,8 +58,7 @@ const DashboardSlide = () => {
         overview: "Overview",
         global: "Global Perspectives",
         individual: "Individual Snapshot",
-        analytics: "Advanced Analytics",
-        feed: "Activity Feed",
+        analytics: "Advanced Analytics"
     };
 
     const handleTabRendering = () => {
@@ -68,12 +67,8 @@ const DashboardSlide = () => {
                 return <Pages.OverviewPage />;
             case "global":
                 return <Pages.GlobalPage />;
-            case "individual":
-                return <Pages.IndividualPage />;
             case "analytics":
                 return <Pages.AnalyticsPage />;
-            case "feed":
-                return <Pages.ActivityFeed />;
         }
     };
 
@@ -95,9 +90,8 @@ const DashboardSlide = () => {
                         <ul className="flex flex-col font-outfit text-[19px] gap-[1vh] m-[5%]">
                             <NavTab label="Overview" route="overview" onClick={handlePageNavigation} />
                             <NavTab label="Global Perspectives" route="global" onClick={handlePageNavigation} />
-                            <NavTab label="Individual Snapshot" route="individual" onClick={handlePageNavigation} />
+                            {/* <NavTab label="Individual Snapshot" route="individual" onClick={handlePageNavigation} /> */}
                             <NavTab label="Advanced Analytics" route="analytics" onClick={handlePageNavigation} />
-                            <NavTab label="Activity Feed" route="feed" onClick={handlePageNavigation} />
                         </ul>
 
                         {/* Divider */}
