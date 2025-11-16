@@ -4,36 +4,25 @@ import { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
 import { CHART_COLORS } from "./CommonChartData";
 import { DataTypeEnum } from "./CommonChartData";
-import { ScatterPlotFetch } from "@/control/types/Chart";
+import { ScatterPlotFetch, ScatterPlotTuple } from "@/control/types/Chart";
 import { fetchScatter } from "@/control/fetch/charts";
 
+
 export default function ScatterPlot() {
-    const [scatterData, setScatterData] = useState<[number, number][]>([]);
-    const [loading, setLoading] = useState(true);
-    const [mounted, setMounted] = useState(false);
+    // data
+    const [scatterData, setScatterData] = useState<[number, number][] | []>([]);
+    
+
+    // states 
+    const [loading, setLoading] = useState<boolean>(true);
+    const [mounted, setMounted] = useState<boolean>(false);
+
     const [fieldX, setFieldX] = useState<DataTypeEnum>(DataTypeEnum.RainfallMM);
-    const [fieldY, setFieldY] = useState<DataTypeEnum>(
-        DataTypeEnum.HumidityPercent,
-    );
+    const [fieldY, setFieldY] = useState<DataTypeEnum>(DataTypeEnum.HumidityPercent);
 
     useEffect(() => {
         setMounted(true);
     }, []);
-
-interface DataPoint {
-    "soil_moisture_%": number;
-    "soil_pH": number;
-    "temperature_C": number;
-    "rainfallmm": number;
-    "humidity%": number;
-    "sunlight_hours": number;
-    "pesticide_usage_ml": number;
-    "total_days": number;
-    "yield_kg_per_hectare": number;
-    "latitude": number;
-    "longitude": number; 
-    "NDVI_index": number;
-}
 
     useEffect(() => {
         if (!mounted) return;
@@ -74,7 +63,7 @@ interface DataPoint {
     if (!mounted) {
         return (
             <div className="p-6 min-h-screen font-sans">
-                <div className="bg-secondary rounded-xl p-6 shadow-2xl max-w-7xl mx-auto border border-border">
+                <div className="bg-secondary rounded-xl p-6 shadow-2xl max-w-7xl mx-auto border">
                     <h2 className="text-2xl font-bold text-primary-text mb-5 mt-0">
                         Agricultural Data Analysis
                     </h2>
@@ -186,23 +175,12 @@ interface DataPoint {
         },
         series: [
             {
+                name: "Points",
                 type: "scatter",
                 data: scatterData,
                 symbolSize: 8,
                 itemStyle: {
-                    color: {
-                        type: "radial",
-                        x: 0.5,
-                        y: 0.5,
-                        r: 0.5,
-                        colorStops: [
-                            { offset: 0, color: CHART_COLORS.scatterDotStart },
-                            { offset: 1, color: CHART_COLORS.scatterDotEnd },
-                        ],
-                    },
-                    opacity: 0.7,
-                    shadowBlur: 8,
-                    shadowColor: CHART_COLORS.scatterDotShadow,
+                    color: "#12c40c",
                 },
                 emphasis: {
                     itemStyle: {
@@ -219,7 +197,7 @@ interface DataPoint {
 
     return (
         <div className="p-6 min-h-screen font-sans">
-            <div className="bg-secondary rounded-xl p-6 shadow-2xl max-w-7xl mx-auto border border-border">
+            <div className="bg-secondary rounded-xl p-6 shadow-2xl w-full mx-auto border border-border">
                 <h2 className="text-2xl font-bold text-primary-text mb-5 mt-0">
                     Agricultural Data Analysis
                 </h2>
@@ -281,7 +259,7 @@ interface DataPoint {
                             style={{ height: "500px" }}
                         >
                             <div className="text-center">
-                                <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4">
+                                <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-secondary-text border-r-transparent mb-4">
                                 </div>
                                 <p className="text-secondary-text">
                                     Loading data...
