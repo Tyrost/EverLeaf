@@ -1,4 +1,6 @@
+
 import OpeningSlide from "@/components/slides/OpeningSlide";
+import Image from "next/image";
 import NavBar from "@/components/navigation/NavBar";
 import MissionSlide from "@/components/slides/MissionSlide";
 import FooterSlide from "@/components/slides/FooterSlide";
