@@ -1,10 +1,10 @@
-import { AccountPage } from "./pages/Account"
-import { ActivityFeed } from "./pages/ActivityFeed"
-import { AnalyticsPage } from "./pages/Analytics"
-import { GlobalPage } from "./pages/Global"
-import { HelpPage } from "./pages/Help"
-import { IndividualPage } from "./pages/Individual"
-import { OverviewPage } from "./pages/Overview"
+import { AccountPage } from "./sections/Account"
+import { ActivityFeed } from "./sections/ActivityFeed"
+import { AnalyticsPage } from "./sections/Analytics"
+import { GlobalPage } from "./sections/Global"
+import { HelpPage } from "./sections/Help"
+import { IndividualPage } from "./sections/Individual"
+import { OverviewPage } from "./sections/Overview"
 
 export const Pages = {
     AccountPage,

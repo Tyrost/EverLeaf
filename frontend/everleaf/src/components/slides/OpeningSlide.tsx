@@ -1,5 +1,6 @@
 import Globe from "../misc/Globe";
 import Particles from "../misc/Particles";
+import NameIntroduction from "../misc/NameIntroduction";
 
 export default function OpeningSlide() {
     return (
@@ -22,11 +23,8 @@ export default function OpeningSlide() {
                 </div>
                 <div className="absolute top-1/2 -translate-y-48 left-20">
                     <div className="flex flex-col gap-1 max-w-[60%]">
-                        <h1 className="text-[8vw]/35 text-nowrap text-neutral-300">
-                            This is{" "}
-                            <span className="text-brand font-bold">EverLeaf</span>
-                        </h1>
-                        <div className="pl-5">
+                        <NameIntroduction/>
+                        <div className="pl-1">
                         <h1 className="text-[2vw] text-left text-neutral-200">
                             The future of agriculture analytics.
                         </h1>
