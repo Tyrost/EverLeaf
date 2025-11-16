@@ -15,7 +15,7 @@ const LoginMainSlide = () => {
         </div>
 
         <BackgroundBeams/>
-        <div className="flex justify-between items-center w-full h-[100vh] backdrop-blur-lg bg-white/05">
+        <div className="flex justify-between items-center w-full h-screen backdrop-blur-lg bg-white/05">
         {/* First Section */}
             <div className="w-[40%] h-[70vh] p-8 flex flex-col justify-center">
 

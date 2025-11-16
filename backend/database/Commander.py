@@ -82,7 +82,7 @@ class Commander(Connection):
 
     # Seeder
     def seed_database(self):
-        csv_path = "data/farming_data.csv"
+        csv_path = "/Users/danielcorzo/Documents/GitHub/EverLeaf/backend/data/farming_data.csv"
         df = pd.read_csv(csv_path)
 
         if self.farming_data.count_documents({}) > 0:

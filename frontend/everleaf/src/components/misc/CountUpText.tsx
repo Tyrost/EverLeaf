@@ -26,7 +26,7 @@ const CountUpText: React.FC<CountUpTextProps> = ({
         if (isInView) {
             const animation = animate(count, number, {
                 duration: 2,
-                ease: "easeOut",
+                ease: "circOut",
             });
             return animation.stop;
         }

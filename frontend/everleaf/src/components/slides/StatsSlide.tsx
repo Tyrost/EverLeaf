@@ -34,11 +34,13 @@ export const MinorText: React.FC<React.PropsWithChildren> = ({ children }) => (
 
 interface CardProps extends React.PropsWithChildren {
     className?: string;
+    spotLightColor?: `rgba(${number}, ${number}, ${number}, ${number})`;
 }
 
-function StatCard({ children, className = "" }: CardProps) {
+function StatCard({ children, className = '', spotLightColor = 'rgba(255, 255, 255, 0.25)' }: CardProps) {
     return (
         <SpotlightCard
+            spotlightColor={spotLightColor}
             className={`${className} bg-neutral-900 rounded-3xl flex justify-center items-center`}
         >
             {children}
@@ -79,7 +81,7 @@ export default function StatsSlide() {
                             staticImage="/misc/corn.jpg"
                             animatedImage="/misc/corn.gif"
                         />
-                        <div className="z-20 pointer-events-none">
+                        <div className="z-10 pointer-events-none">
                             <MinorText>Supports:</MinorText>
                             <SemiImportantText>Wheat</SemiImportantText>
                             <SemiImportantText>Soybeans</SemiImportantText>
@@ -88,7 +90,7 @@ export default function StatsSlide() {
                             <SemiImportantText>Maize</SemiImportantText>
                         </div>
                     </StatCard>
-                    <StatCard className="col-span-3 row-span-3 flex flex-col">
+                    <StatCard spotLightColor={"rgba(227, 23, 23, 0.30)"} className="col-span-3 row-span-3 flex flex-col">
                         <PingLiveCard />
                     </StatCard>
                     <StatCard className="col-span-2 row-span-1 flex flex-col gap-1">
@@ -109,7 +111,7 @@ export default function StatsSlide() {
                             <h3 className="text-2xl font-bold">
                                 Completely Sustainable Buisness Practices
                             </h3>
-                <BiSolidLeaf className="text-7xl text-green-400" />
+                            <BiSolidLeaf className="text-7xl text-brand" />
                         </div>
                     </StatCard>
                     <StatCard className="col-span-1 row-span-1 flex flex-col gap-1">
