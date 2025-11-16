@@ -11,6 +11,7 @@ const UserMainButtonProp = () => {
     const ref = useRef<HTMLDivElement>(null);
 
     const userImagePath = user?.imageUrl
+    const userFirstName = user?.firstName;
 
     const photoPath = !isSignedIn ? "/misc/!loggedUser.png" : userImagePath || "/misc/!loggedUser.png"
 
@@ -26,12 +27,14 @@ const UserMainButtonProp = () => {
 
     return (
 
-        <div className="flex items-center gap-4 relative z-10">
+        <div className="flex flex-row items-center gap-4 relative z-10 pr-10">
         {/* Avatar */}
+        <h2 className="align-middle font-outfit text-xl font-medium">{userFirstName}</h2>
         <div
-            className="w-[50px] h-[50px] border border-white/25 hover:border-white/40 transition-colors rounded-full mx-10 cursor-pointer"
+            className="w-[50px] h-[50px] border border-white/25 hover:border-white/40 transition-colors rounded-full cursor-pointer"
             onClick={() => setOpen(!open)}
         >
+            
             <Image
             src={photoPath}
             alt="user picture"
