@@ -4,7 +4,7 @@ import Particles from "../misc/Particles";
 export default function OpeningSlide() {
     return (
         <>
-            <div className="relative w-full h-[110vh] overflow-hidden">
+            <div className="mt-4 relative w-full h-[110vh] overflow-hidden">
                 <div className="absolute inset-0 -z-10">
                     <Particles
                         particleColors={["#ffffff", "#ffffff"]}
@@ -12,7 +12,7 @@ export default function OpeningSlide() {
                         particleSpread={10}
                         speed={0.1}
                         particleBaseSize={100}
-                        moveParticlesOnHover={true}
+                        moveParticlesOnHover={false}
                         alphaParticles={false}
                         disableRotation={false}
                     />
