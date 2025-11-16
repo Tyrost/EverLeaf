@@ -16,7 +16,7 @@ const NavBar: React.FC<NavBarProps> = ({
 
     return (
         <>
-            <header className="fixed top-0 w-full h-[100px] backdrop-blur-lg bg-white/10 z-10 border-b border-white/15">
+            <header className="fixed top-0 w-full h-[100px] backdrop-blur-lg bg-white/10 z-40 border-b border-white/15">
                 <div className="flex flex-cols h-full items-center">
                     <div className="flex w-full p-5 gap-x-[2%] justify-left overflow-y-hidden">
                         <EverLeafLogo size={[130, 130]} />
