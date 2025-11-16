@@ -19,3 +19,14 @@ export interface RangeApiResponse {
 }
 
 export type FarmRangeTuple = [number, number];
+
+export interface FarmHealthPoint {
+    health_index: number;
+    latitude: number;
+    longitude: number;
+}
+
+export interface FarmHealthApiResponse {
+    status: string;
+    response: FarmHealthPoint[];
+}
