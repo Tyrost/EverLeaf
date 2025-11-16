@@ -25,16 +25,19 @@ class Commander(Connection):
             user.pop("_id", None)
         return user
 
-    def create_user(self, user_id, username):
+    def create_user(self, user_id, data):
         existing = self.users.find_one({"user_id": user_id})
         if existing:
             return {"error": "User already exists"}, 409
 
-        self.users.insert_one({
-            "user_id": user_id,
-            "username": username
-        })
-        
+        user_doc = {"user_id": user_id}
+
+        for field in FARM_FIELDS:
+            if field in data:
+                user_doc[field] = data[field]
+
+        self.users.insert_one(user_doc)
+
         return {"message": "Profile created", "userId": user_id}, 200
     
     # Farm Routes
@@ -82,7 +85,7 @@ class Commander(Connection):
 
     # Seeder
     def seed_database(self):
-        csv_path = "/Users/danielcorzo/Documents/GitHub/EverLeaf/backend/data/farming_data.csv"
+        csv_path = "/Users/ps/Desktop/Everleaf/backend/data/farming_data.csv"
         df = pd.read_csv(csv_path)
 
         if self.farming_data.count_documents({}) > 0:
