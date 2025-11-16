@@ -1,5 +1,6 @@
 import pandas as pd
 from database.Connection import Connection
+from pathlib import Path
 import random
 from constants import FARM_FIELDS
 
@@ -85,11 +86,12 @@ class Commander(Connection):
 
     # Seeder
     def seed_database(self):
-        csv_path = "/Users/danielcorzo/Documents/GitHub/EverLeaf/backend/.env"
-        df = pd.read_csv(csv_path)
-
         if self.farming_data.count_documents({}) > 0:
             return
+
+        BASE_DIR = Path(__file__).resolve().parent.parent
+        csv_path = BASE_DIR / "data" / "farming_data.csv"
+        df = pd.read_csv(csv_path)
 
         for _, row in df.iterrows():
             doc = {col: (None if pd.isna(val) else val) for col, val in row.items()}
