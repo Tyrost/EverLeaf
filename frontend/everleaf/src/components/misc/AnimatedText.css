@@ -1,0 +1,26 @@
+.animated-background {
+  background: linear-gradient(
+    to right,
+    #a3e635,
+    #84cc16,
+    #65a30d,
+    #a3e635,
+    #22c55e,
+    #16a34a 
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: animation 3s ease infinite;
+}
+
+@keyframes animation {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}

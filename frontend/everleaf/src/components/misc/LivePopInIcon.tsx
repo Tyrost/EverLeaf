@@ -8,12 +8,13 @@ export default function LivePopInIcon() {
         <motion.div
             initial={{ scale: 0, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
+            viewport={{ once: true, amount: "all" }}
             transition={{
                 type: "spring",
                 stiffness: 300,
                 damping: 20,
             }}
+            whileHover={{scale: 1.05}}
         >
             <CgMediaLive className="text-7xl text-red-700" />
         </motion.div>
