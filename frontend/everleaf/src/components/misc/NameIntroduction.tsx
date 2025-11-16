@@ -34,7 +34,7 @@ export default function NameIntroduction() {
                 <motion.span
                     layout
                     transition={{ layout: { delay: 1, duration: 0.6, ease: "easeInOut" } }}
-                    className="text-brand font-bold inline-block"
+                    className="text-brand font-bold inline-block font-outfit"
                 >
                     EverLeaf
                 </motion.span>
