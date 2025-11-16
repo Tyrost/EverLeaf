@@ -29,28 +29,25 @@ export default function AnimatedPoints() {
           onMouseLeave={() => setHoveredIndex(null)}
           className="relative group"
         >
-          {/* Animated gradient background */}
           <motion.div
-            className="absolute inset-0 rounded-8xl bg-gradient-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 blur-xl"
+            className="absolute inset-0 rounded-8xl bg-linear-to-r from-emerald-500/10 via-green-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 blur-xl"
             animate={{
               scale: hoveredIndex === i ? 1.05 : 1,
             }}
             transition={{ duration: 0.3 }}
           />
           
-          {/* Card container */}
           <motion.div
-            className="relative flex items-start gap-4 p-6 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-sm"
+            className="relative flex items-start gap-4 p-6 rounded-2xl border border-white/5 bg-white/2 backdrop-blur-sm"
             whileHover={{ 
               scale: 1.02,
               borderColor: "rgba(52, 211, 153, 0.3)",
             }}
             transition={{ duration: 0.2 }}
           >
-            {/* Animated icon */}
-            <div className="relative flex-shrink-0 mt-1">
+            <div className="relative shrink-0 mt-1">
               <motion.div
-                className="h-[2.5vw] w-[2.5vw] rounded-full bg-gradient-to-br from-emerald-400 to-green-600 flex items-center justify-center"
+                className="h-[2.5vw] w-[2.5vw] rounded-full bg-linear-to-br from-emerald-400 to-green-600 flex items-center justify-center"
                 animate={{
                   boxShadow: hoveredIndex === i 
                     ? "0 0 30px rgba(52, 211, 153, 0.6)" 
@@ -71,7 +68,6 @@ export default function AnimatedPoints() {
                 />
               </motion.div>
               
-              {/* Pulse ring */}
               <motion.div
                 className="absolute inset-0 rounded-full border-2 border-emerald-400"
                 initial={{ scale: 1, opacity: 0.5 }}
@@ -87,7 +83,6 @@ export default function AnimatedPoints() {
               />
             </div>
 
-            {/* Text content */}
             <div className="flex-1">
               <motion.p 
                 className="text-[1vw] leading-relaxed text-white/90 font-outfit"
@@ -99,16 +94,14 @@ export default function AnimatedPoints() {
               </motion.p>
             </div>
 
-            {/* Corner accent */}
             <motion.div
-              className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100"
+              className="absolute top-0 right-0 w-20 h-20 bg-linear-to-br from-emerald-500/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100"
               initial={{ scale: 0, rotate: -45 }}
               whileHover={{ scale: 1, rotate: 0 }}
               transition={{ duration: 0.4 }}
             />
           </motion.div>
 
-          {/* Number indicator */}
           <motion.div
             className="absolute -left-2 top-6 text-emerald-400/20 text-6xl font-bold font-outfit"
             initial={{ opacity: 0 }}
