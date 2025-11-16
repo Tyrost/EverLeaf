@@ -63,7 +63,7 @@ export default function ScatterPlot() {
     if (!mounted) {
         return (
             <div className="p-6 min-h-screen font-sans">
-                <div className="bg-secondary rounded-xl p-6 shadow-2xl max-w-7xl mx-auto border border-border">
+                <div className="bg-secondary rounded-xl p-6 shadow-2xl max-w-7xl mx-auto border">
                     <h2 className="text-2xl font-bold text-primary-text mb-5 mt-0">
                         Agricultural Data Analysis
                     </h2>
@@ -197,7 +197,7 @@ export default function ScatterPlot() {
 
     return (
         <div className="p-6 min-h-screen font-sans">
-            <div className="bg-secondary rounded-xl p-6 shadow-2xl max-w-7xl mx-auto border border-border">
+            <div className="bg-secondary rounded-xl p-6 shadow-2xl w-full mx-auto border border-border">
                 <h2 className="text-2xl font-bold text-primary-text mb-5 mt-0">
                     Agricultural Data Analysis
                 </h2>
