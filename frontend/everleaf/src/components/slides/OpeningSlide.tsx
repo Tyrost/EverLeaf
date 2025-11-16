@@ -35,7 +35,7 @@ export default function OpeningSlide() {
                         </div>
                     </div>
                 </div>
-            </div>
+
         </>
     );
 }
