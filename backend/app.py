@@ -2,8 +2,9 @@
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from commander import Commander
+from database.Commander import Commander
 from constants import FARM_FIELDS
+from Data import Data
 
 app = Flask(__name__)
 CORS(app)
@@ -20,16 +21,15 @@ def new_user():
     data = request.get_json()
 
     user_id = data.get("user_id")
-    username = data.get("username")
 
     if not user_id:
         return jsonify({"status": "error", "response": "Unauthorized"}), 401
 
-    result, code = cmd.create_user(user_id, username)
+    result, code = cmd.create_user(user_id, data)
 
     status = "error" if code >= 400 else "success"
 
-    return jsonify({"status": status, "response": result }), code
+    return jsonify({"status": status, "response": result}), code
 
 @app.route("/api/users/<user_id>", methods=["GET"])
 def get_user(user_id):
@@ -40,14 +40,50 @@ def get_user(user_id):
 
     return jsonify({"status": "success", "response": user}), 200
 
+
+@app.route("/api/scatterplot", methods=["GET"]) ###################
+def scatter():
+    field_x = request.args.get("field_x")
+    field_y = request.args.get("field_y")
+    data = Data()
+    scatter_data = data.gather_scatterplot(field_x, field_y)
+    
+    return jsonify({
+        "status": "success",
+        "response": scatter_data
+    }), 200
+
 @app.route("/api/farms", methods=["GET", "POST"])
 def farms():
+    #
+    #
+    # Parameters route
+    # "x": [. . .], "y": [. . .]
+    # TODO Implement get_farm_field(field) in commander.py
+    
+    #
     if request.method == "GET":
-        farms = cmd.get_all_farms()
-        return jsonify({
-            "status": "success",
-            "response": farms
-        }), 200
+        
+        field_x = request.args.get("field_x")
+        field_y = request.args.get("field_y")
+        
+        params = request.args.get("params")
+        if params:
+            clean = params.replace("[", "").replace("]", "")
+            field_list = [f.strip() for f in clean.split(",") if f.strip()]
+            data = Data()
+            farm_data = data.gather_scatterplot(field_x, field_y)
+
+            return jsonify({
+                "status": "success",
+                "response": farm_data
+            }), 200
+        else:
+            farms = cmd.get_all_farms()
+            return jsonify({
+                "status": "success",
+                "response": farms
+            }), 200
     
     elif request.method == "POST":
         data = request.get_json()
@@ -77,6 +113,59 @@ def get_farms_basic():
         "status": "success",
         "response": farms
     }), 200
+
+@app.route("/api/farms/range/<parameter>", methods=["GET"]) ###################
+def get_range(parameter):
+    data = Data()
+    
+    range = data.set_ranges(parameter)
+
+    return jsonify({
+        "status": "success",
+        "response": range
+    }), 200
+
+@app.route("/api/farms/regression", methods=["GET"]) ###################
+def get_regression():
+    feature_x = request.args.get("feature_x")
+    feature_y = request.args.get("feature_y")
+    value = float(request.args.get("x_value"))
+    data = Data()
+    regression = data.linear_regression(feature_x, feature_y, value)
+
+    return jsonify({
+        "status": "success",
+        "response": regression
+    }), 200
+
+@app.route("/api/farms/health", methods=["GET"]) ###################
+def get_farms_health():
+    data = Data()
+    farms_data = data.calculate_coordinate_health()
+    return jsonify({
+        "status": "success",
+        "response": farms_data
+    }), 200
+
+@app.route("/api/farms/fields/<field>", methods=["GET"]) ###################
+def get_farm_field(field):
+    #
+    #
+    # Input field, get 
+    # "region": <field avg>
+    # ex. "South India": 1.72839
+    #
+    #
+    if request.method == "GET":
+        data = Data()
+        farm_data = data.get_average_per_country(field)
+        if not farm_data:
+            return jsonify({"status": "error", "response": "Farm not found"}), 404
+
+        return jsonify({
+            "status": "success",
+            "response": farm_data
+        }), 200
 
 @app.route("/api/farms/<farm_id>", methods=["GET", "PUT"])
 def get_farm(farm_id):
@@ -115,4 +204,4 @@ def get_farm(farm_id):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5050, debug=True)

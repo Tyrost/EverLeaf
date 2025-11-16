@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit, Red_Hat_Display } from "next/font/google";
+
+import { ClerkProvider } from "@clerk/nextjs";
+
 import "./globals.css";
+import { dark } from "@clerk/themes";
 
 import { ThemeProvider } from "@/components/core/ThemeProvider";
 // Chosen Main Fonts
@@ -38,21 +42,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} 
+    <ClerkProvider
+      afterSignInUrl={"/dashboard"}
+      afterSignOutUrl={"/"}
+      afterSignUpUrl={"/auth/login"}
+      publishableKey={key}
+      appearance={{ theme: dark }}
+    >
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} 
         ${redhat.variable} ${outfit.variable} antialiased`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
         >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+            {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

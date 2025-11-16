@@ -1,16 +1,18 @@
 'use client';
 
-import {useUser} from "@/app/control/user/UserState"
+import { useUser } from "@/control/user/UserState"
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import UserMainPanelProp from "./UserMainButtonPanelProp";
 
 const UserMainButtonProp = () => {
     const [open, setOpen] = useState(false);
-    const { isLogged, userImagePath } = useUser()
+    const { isSignedIn, user } = useUser()
     const ref = useRef<HTMLDivElement>(null);
 
-    const photoPath = !isLogged ? "/misc/!loggedUser.png" : userImagePath
+    const userImagePath = user?.imageUrl
+
+    const photoPath = !isSignedIn ? "/misc/!loggedUser.png" : userImagePath || "/misc/!loggedUser.png"
 
     useEffect(() => {
         const handler = (event: MouseEvent) => {
@@ -27,7 +29,7 @@ const UserMainButtonProp = () => {
         <div className="flex items-center gap-4 relative z-10">
         {/* Avatar */}
         <div
-            className="w-[50px] h-[50px] border border-white rounded-full mx-10 cursor-pointer"
+            className="w-[50px] h-[50px] border border-white/25 hover:border-white/40 transition-colors rounded-full mx-10 cursor-pointer"
             onClick={() => setOpen(!open)}
         >
             <Image
@@ -42,7 +44,7 @@ const UserMainButtonProp = () => {
         {/* Panel */}
         {open && (
             <div className="absolute right-0 pr-[20%] top-[55px]">
-                <UserMainPanelProp isLogged={isLogged} />
+                <UserMainPanelProp isLogged={isSignedIn || false} />
             </div>
         )}
         </div>

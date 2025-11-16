@@ -88,7 +88,17 @@
 }
 /* for creating new tailwind styles */
 @theme {
+  --color-brand: oklch(0.723 0.219 150.24);
+  --color-primary: oklch(0.15 0.015 150);
+  --color-secondary: oklch(0.20 0.012 150);
+  --color-tertiary: oklch(0.25 0.010 150);
+  --color-border: oklch(0.30 0.010 150);
+  --color-primary-text: oklch(0.98 0 0);
+  --color-secondary-text: oklch(0.65 0.008 150);
 
+  /* just in case you need it */
+  --color-neutral-750: oklch(30.7% 0 0);
+  --color-neutral-850: oklch(23.7% 0 0);
 }
 
 .font-redhat { font-family: var(--font-redhat); }
