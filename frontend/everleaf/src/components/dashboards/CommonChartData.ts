@@ -1,17 +1,19 @@
-export const kFieldTypes = [
-    "soilmoisture%",
-    "soil_pH",
-    "temperature_C",
-    "rainfallmm",
-    "humidity%",
-    "sunlight_hours",
-    "pesticide_usage_ml",
-    "total_days",
-    "yield_kg_per_hectare",
-    "latitude",
-    "longitude",
-    "NDVI_index",
-];
+export enum DataTypeEnum {
+    SoilMoisturePercent = "soil_moisture_%",
+    SoilPH = "soil_pH",
+    TemperatureC = "temperature_C",
+    RainfallMM = "rainfall_mm",
+    HumidityPercent = "humidity_%",
+    SunlightHours = "sunlight_hours",
+    PesticideUsageML = "pesticide_usage_ml",
+    TotalDays = "total_days",
+    YieldKgPerHectare = "yield_kg_per_hectare",
+    Latitude = "latitude",
+    Longitude = "longitude",
+    NDVIIndex = "NDVI_index",
+    HealthIndex = "health_index",
+}
+
 
 // ============================================
 // COLOR CONFIGURATION - Edit colors here!
