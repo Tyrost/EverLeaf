@@ -1,5 +1,5 @@
 import pandas as pd
-from connection import Connection
+from database.Connection import Connection
 import random
 from constants import FARM_FIELDS
 

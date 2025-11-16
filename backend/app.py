@@ -2,7 +2,7 @@
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from commander import Commander
+from database.Commander import Commander
 from constants import FARM_FIELDS
 
 app = Flask(__name__)
@@ -115,4 +115,4 @@ def get_farm(farm_id):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5050, debug=True)
