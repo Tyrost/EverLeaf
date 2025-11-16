@@ -14,7 +14,7 @@ const EverLeafLogo = ({redirect = true, theme = "dark", size = [100, 100]} : { r
         alt="EverLeaf"
         width={size[0]}
         height={size[1]}
-        className="border object-contain"
+        className="border object-contain hover:scale-105 transition-transform ease"
         />
     }
 

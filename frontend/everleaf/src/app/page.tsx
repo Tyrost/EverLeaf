@@ -9,7 +9,7 @@ import StatsSlide from "@/components/slides/StatsSlide";
 export default function Home() {
   return (
     <>
-      <NavBar />
+      <NavBar hasLinks={true}/>
       <OpeningSlide/>
       <StatsSlide/>
       <MissionSlide/>

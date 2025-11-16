@@ -1,13 +1,21 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Red_Hat_Display, Outfit } from "next/font/google";
-import { ClerkProvider } from '@clerk/nextjs'
+import { Geist, Geist_Mono, Outfit, Red_Hat_Display } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { dark } from "@clerk/themes";
 
 // Chosen Main Fonts
 
-const redhat = Red_Hat_Display({subsets: ["latin"], variable: "--font-redhat", weight: ["300", "500", "700"]})
-const outfit = Outfit({subsets: ["latin"], variable: "--font-outfit", weight: ["100", "200", "300", "500", "800"]})
+const redhat = Red_Hat_Display({
+  subsets: ["latin"],
+  variable: "--font-redhat",
+  weight: ["300", "500", "700"],
+});
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+  weight: ["100", "200", "300", "500", "800"],
+});
 
 // ------------------------------------------------------------------------------------------------
 
@@ -31,21 +39,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const key = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
   return (
-
-    <ClerkProvider afterSignInUrl={"/dashboard"} afterSignOutUrl={"/"} afterSignUpUrl={"/auth/login"}
-    publishableKey={key} appearance={{ theme: dark }}>
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} 
+    <ClerkProvider
+      afterSignInUrl={"/dashboard"}
+      afterSignOutUrl={"/"}
+      afterSignUpUrl={"/auth/login"}
+      publishableKey={key}
+      appearance={{ theme: dark }}
+    >
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} 
         ${redhat.variable} ${outfit.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+        >
+            {children}
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

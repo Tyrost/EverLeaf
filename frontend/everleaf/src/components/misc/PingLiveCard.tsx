@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function PingLiveCard() {
     return (
-        <>
+        <div className="z-10">
             <div className="flex w-full gap-2.5 flex-row items-center justify-baseline relative">
                 <ImportantText>Live</ImportantText>
                 <motion.div
@@ -43,8 +43,8 @@ export default function PingLiveCard() {
                 </motion.div>
             </div>
             <ImportantText>
-                Snapshorts Anywhere in the World
+                Snapshots <br/> <u>Anywhere</u> in the World
             </ImportantText>
-        </>
+        </div>
     );
 }
