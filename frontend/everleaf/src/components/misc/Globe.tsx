@@ -7,23 +7,31 @@ import { fetchFarmHealth } from "@/control/fetch/charts";
 
 export default function Globe() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const [loaded, setLoaded] = useState(false);
+
     const [markers, setMarkers] = useState<any[]>([]);
     const kSPINVELOCITY = 8;
-
     const size = 1000;
 
     // Convert health to green → yellow → red
-    const healthToRGB = (health: number, maxHealth: number): [number, number, number] => {
-        const t = Math.max(0, Math.min((health / maxHealth) * 2, 1));
+    const healthToRGB = (
+        health: number,
+        minHealth: number,
+        maxHealth: number,
+    ): [number, number, number] => {
+        const clamped = Math.max(minHealth, Math.min(health, maxHealth));
+
+        let t = (clamped - minHealth) / (maxHealth - minHealth);
+        t = Math.max(0, Math.min(t * 2, 1));
 
         let r = 1;
         let g = 0;
 
         if (t < 0.5) {
-            g = t * 2;                 // red → yellow
+            g = t * 2;
         } else {
             g = 1;
-            r = 1 - (t - 0.5) * 2;     // yellow → green
+            r = 1 - (t - 0.5) * 2;
         }
 
         return [r, g, 0];
@@ -43,16 +51,20 @@ export default function Globe() {
                     : farmsNested;
 
                 // compute max
-                const maxHealth = Math.max(...farms.map(f => f.health_index));
+                const maxHealth = Math.ceil(
+                    Math.max(...farms.map((f) => f.health_index)),
+                );
+                const minHealth = Math.ceil(
+                    Math.min(...farms.map((f) => f.health_index)),
+                );
 
                 const mk = farms.map((farm: any) => ({
                     location: [farm.latitude, farm.longitude],
                     size: 0.025,
-                    color: healthToRGB(farm.health_index, maxHealth), // health-based color
+                    color: healthToRGB(farm.health_index, minHealth, maxHealth), // health-based color
                 }));
 
                 setMarkers(mk);
-
             } catch (err) {
                 console.error("Error loading farm health:", err);
             }
@@ -77,7 +89,7 @@ export default function Globe() {
             theta: 0.5,
             dark: 1,
             diffuse: 1.2,
-            mapSamples: 16000,
+            mapSamples: 19000,
             mapBrightness: 6,
             baseColor: [0.3, 0.3, 0.3],
             markerColor: [1, 1, 1], // required fallback, per-marker color overrides it
@@ -94,15 +106,22 @@ export default function Globe() {
         return () => globe.destroy();
     }, [markers]);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoaded(true);
+        }, 1400);
+
+        return () => clearTimeout(timer);
+    }, []);
+
     // -------------------------------------------------------
     // RENDER
     // -------------------------------------------------------
     return (
         <motion.div
             initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={loaded ? { opacity: 1, y: 0 } : { opacity: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: false, amount: 0.3 }}
         >
             <canvas
                 ref={canvasRef}

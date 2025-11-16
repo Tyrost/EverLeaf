@@ -11,8 +11,6 @@ export const GlobalPage = () => {
                 <MoreStats/>
             </div>
         </div>
-
-
         </>
     );
 };

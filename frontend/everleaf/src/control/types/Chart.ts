@@ -11,6 +11,7 @@ export interface RegressionApiResponse {
 }
 
 // The chart only needs the tuple
+export type ScatterPlotTuple = [[number, number][]];
 export type RegressionPlotTuple = [number[], number[], number];
 
 export interface RangeApiResponse {
