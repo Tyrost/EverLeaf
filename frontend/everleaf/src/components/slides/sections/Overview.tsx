@@ -8,7 +8,7 @@ export const OverviewPage = () => {
     const version = "BETA v1.2.0";
 
     const activeUsers = "14k";
-    const farms = 5000;
+    const farms = 1000;
     const uptime = "13 hours";
 
     return (
