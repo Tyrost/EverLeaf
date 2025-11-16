@@ -1,11 +1,11 @@
-import AccountPage from "@/components/pages/AccountPage";
+import AccountSlide from "@/components/slides/AccountSlide";
 
 const Account = () => {
     return (
         <>
-            <AccountPage />
+            <AccountSlide />
         </>
     )
 }
 
-export default Account; 
+export default Account;
