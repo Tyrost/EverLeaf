@@ -4,7 +4,7 @@ import Particles from "../misc/Particles";
 export default function OpeningSlide() {
     return (
         <>
-            <div className="mt-4 relative w-full h-[110vh] overflow-hidden">
+            <div className="mt-4 relative w-full h-[120vh] overflow-hidden mb-40">
                 <div className="absolute inset-0 -z-10">
                     <Particles
                         particleColors={["#ffffff", "#ffffff"]}
@@ -24,7 +24,7 @@ export default function OpeningSlide() {
                         <div className="flex flex-col gap-1">
                             <h1 className="text-9xl">Everleaf</h1>
                             <h5>Some short description</h5>
-                            <button className="text-2xl mt-4 text-black font-bold bg-lime-500 rounded-3xl px-7 py-2">
+                            <button className="text-2xl mt-4 text-black font-bold bg-brand rounded-3xl px-7 py-2">
                                 Log In
                             </button>
                         </div>
