@@ -121,10 +121,10 @@ const DashboardSlide = () => {
                 {/* CONTENT AREA */}
                 <main className="flex-1 ml-[20%] h-full overflow-y-auto p-6 bg-tertiary">
                     <h1 className="text-text-primary text-6xl font-outfit mb-4">
-                        Dashboard –{" "}
-                        <span className="text-text-secondary font-light">
+                        Dashboard<br/>
+                        <div className="text-[2vw] font-light my-2 text-white/60">
                             {pageNames[currentPage]}
-                        </span>
+                        </div>
                     </h1>
 
                     {handleTabRendering()}
