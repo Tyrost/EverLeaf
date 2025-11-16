@@ -1,35 +1,79 @@
 "use client";
 
 import { Pages } from "./DashboardPages";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import NavBar from "../navigation/NavBar";
 
+interface NavTabProps {
+    label: string;
+    route: string;
+    onClick: (route: string) => void;
+}
+
+const NavTab: React.FC<NavTabProps> = ({ label, route, onClick }) => {
+    const searchParams = useSearchParams();
+    const currentPage = searchParams.get("page");
+    const isActive = currentPage === route;
+
+    return (
+        <li
+            className={`w-[70%] rounded-lg p-2.5 cursor-pointer transition-colors 
+                ${
+                    isActive
+                        ? "bg-brand/20 text-text-primary"
+                        : "hover:bg-brand/10 text-text-secondary"
+                }`}
+            onClick={() => onClick(route)}
+        >
+            {label}
+        </li>
+    );
+};
+
+interface ConfigTabProps {
+    label: string;
+    route: string;
+}
+
+const ConfigTab: React.FC<ConfigTabProps> = ({ label, route }) => {
+    const router = useRouter();
+
+    return (
+        <li
+            className="w-[70%] rounded-lg transition-colors p-2.5 
+                       hover:bg-brand/10 cursor-pointer text-text-secondary"
+            onClick={() => router.push(route)}
+        >
+            {label}
+        </li>
+    );
+};
 
 const DashboardSlide = () => {
-    const [currentPage, setPage] = useState("general");
+    const [currentPage, setPage] = useState("overview");
     const router = useRouter();
+
+    const pageNames: Record<string, string> = {
+        overview: "Overview",
+        global: "Global Perspectives",
+        individual: "Individual Snapshot",
+        analytics: "Advanced Analytics",
+        feed: "Activity Feed",
+    };
 
     const handleTabRendering = () => {
         switch (currentPage) {
             case "overview":
                 return <Pages.OverviewPage />;
             case "global":
-                return <Pages.GlobalPage />
-            case "feed":
-                return <Pages.ActivityFeed />;
+                return <Pages.GlobalPage />;
             case "individual":
                 return <Pages.IndividualPage />;
-            case "notifications":
-                return <Pages.AnalyticsPage />;
             case "analytics":
-                return <Pages.GlobalPage />;
-            case "search":
-                return <Pages.HelpPage />;
-            case "favorites":
-                return <Pages.IndividualPage />;
-            case "settings":
-                return <Pages.AccountPage />;
+                return <Pages.AnalyticsPage />;
+            case "feed":
+                return <Pages.ActivityFeed />;
         }
     };
 
@@ -40,78 +84,53 @@ const DashboardSlide = () => {
 
     return (
         <>
-            {/* -------------------------------- */}
-            {/* FIXED NAVBAR */}
-            {/* -------------------------------- */}
-            <NavBar/>
+            <NavBar />
 
-            {/* -------------------------------- */}
-            {/* MAIN LAYOUT BELOW NAVBAR */}
-            {/* -------------------------------- */}
-            <div className="flex pt-[100px] h-screen bg-neutral-950">
-
-                {/* -------------------------------- */}
-                {/* FIXED SIDEBAR */}
-                {/* -------------------------------- */}
-                <aside className="fixed left-0 top-[90px] h-[calc(100vh-100px)] w-[20%] border-r border-white bg-neutral-800 overflow-y-auto">
-
-                    <div className="flex flex-col">
+            <div className="flex pt-[100px] h-screen bg-primary">
+                {/* SIDEBAR */}
+                <aside className="fixed left-0 h-[calc(100vh-100px)] w-[20%] border-r border-border bg-secondary overflow-y-auto">
+                    <div className="flex flex-col h-full justify-around">
 
                         {/* Main Tabs */}
-                        <ul className="flex flex-col text-white/80 font-outfit text-[19px] gap-[1vh] m-[5%]">
-                            <li className="w-[70%] rounded-lg p-2.5 hover:bg-white/10 cursor-pointer"
-                                onClick={() => handlePageNavigation("overview")}>Overview</li>
-
-                            <li className="w-[70%] rounded-lg p-2.5 hover:bg-white/10 cursor-pointer"
-                                onClick={() => handlePageNavigation("global")}>Global Perspectives</li>
-
-                            <li className="w-[70%] rounded-lg p-2.5 hover:bg-white/10 cursor-pointer"
-                                onClick={() => handlePageNavigation("individual")}>Individual Snapshot</li>
-
-                            <li className="w-[70%] rounded-lg p-2.5 hover:bg-white/10 cursor-pointer"
-                                onClick={() => handlePageNavigation("analytics")}>Advanced Analytics</li>
-
-                            <li className="w-[70%] rounded-lg p-2.5 hover:bg-white/10 cursor-pointer"
-                                onClick={() => handlePageNavigation("feed")}>Activity Feed</li>
+                        <ul className="flex flex-col font-outfit text-[19px] gap-[1vh] m-[5%]">
+                            <NavTab label="Overview" route="overview" onClick={handlePageNavigation} />
+                            <NavTab label="Global Perspectives" route="global" onClick={handlePageNavigation} />
+                            <NavTab label="Individual Snapshot" route="individual" onClick={handlePageNavigation} />
+                            <NavTab label="Advanced Analytics" route="analytics" onClick={handlePageNavigation} />
+                            <NavTab label="Activity Feed" route="feed" onClick={handlePageNavigation} />
                         </ul>
 
                         {/* Divider */}
                         <div className="flex items-center justify-center py-[5%] gap-4">
-                            <div className="flex-1 bg-neutral-500 h-px max-w-[30%]"></div>
-                            <h1 className="text-neutral-500 font-outfit whitespace-nowrap">Configuration</h1>
-                            <div className="flex-1 bg-neutral-500 h-px max-w-[30%]"></div>
+                            <div className="flex-1 bg-border h-px max-w-[30%]" />
+                            <h1 className="text-text-secondary font-outfit whitespace-nowrap">
+                                Configuration
+                            </h1>
+                            <div className="flex-1 bg-border h-px max-w-[30%]" />
                         </div>
 
                         {/* Settings */}
-                        <ul className="flex flex-col text-white/80 font-outfit text-[19px] gap-[1vh] m-[5%]">
-                            <li className="w-[70%] rounded-lg p-2.5 hover:bg-white/10 cursor-pointer"
-                                onClick={() => router.push("/account")}>Account</li>
-
-                            <li className="w-[70%] rounded-lg p-2.5 hover:bg-white/10 cursor-pointer"
-                                onClick={() => router.push("/faq")}>FAQ</li>
-
-                            <li className="w-[70%] rounded-lg p-2.5 hover:bg-white/10 cursor-pointer"
-                                onClick={() => router.push("/privacy-policy")}>Privacy & Policy</li>
+                        <ul className="flex flex-col font-outfit text-[19px] gap-[1vh] m-[5%]">
+                            <ConfigTab label="Account" route="/account" />
+                            <ConfigTab label="FAQ" route="/faq" />
+                            <ConfigTab label="Privacy & Policy" route="/privacy-policy" />
                         </ul>
-
                     </div>
                 </aside>
 
-                {/* -------------------------------- */}
-                {/* SCROLLABLE CONTENT AREA */}
-                {/* -------------------------------- */}
-                <main className="flex-1 ml-[20%] h-full overflow-y-auto p-6 bg-neutral-750">
-
-                    <h1 className="text-white text-[70px] font-outfit mb-2.5">
-                        Dashboard
+                {/* CONTENT AREA */}
+                <main className="flex-1 ml-[20%] h-full overflow-y-auto p-6 bg-tertiary">
+                    <h1 className="text-text-primary text-6xl font-outfit mb-4">
+                        Dashboard –{" "}
+                        <span className="text-text-secondary font-light">
+                            {pageNames[currentPage]}
+                        </span>
                     </h1>
 
                     {handleTabRendering()}
                 </main>
-
             </div>
         </>
     );
 };
-
 export default DashboardSlide;

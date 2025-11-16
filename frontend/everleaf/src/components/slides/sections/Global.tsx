@@ -1,142 +1,7 @@
 import ScatterPlot from "@/components/dashboards/ScatterPlot";
-
-interface RegionData {
-    region: string;
-    value: number;
-}
-
-interface GlobalPageProps {
-    data?: RegionData[];
-}
+import { kFieldTypes } from "@/components/dashboards/CommonChartData";
 
 export const GlobalPage = () => {
-    const defaultData: RegionData[] = [
-        { region: "North America", value: 4000 },
-        { region: "Europe", value: 3500 },
-        { region: "Asia", value: 5200 },
-        { region: "South America", value: 2100 },
-        { region: "Africa", value: 1800 },
-        { region: "Oceania", value: 1200 },
-    ];
-
-    const chartData = defaultData;
-    const regions = chartData.map((d) => d.region);
-    const values = chartData.map((d) => d.value);
-
-    const option = {
-        backgroundColor: "transparent",
-        title: {
-            text: "Regional Distribution",
-            left: "center",
-            top: 20,
-            textStyle: {
-                color: "#e0e0e0",
-                fontSize: 20,
-                fontWeight: 600,
-            },
-        },
-        tooltip: {
-            trigger: "axis",
-            axisPointer: {
-                type: "shadow",
-            },
-            backgroundColor: "rgba(0, 0, 0, 0.8)",
-            borderColor: "#4caf50",
-            borderWidth: 1,
-            textStyle: {
-                color: "#fff",
-            },
-        },
-        grid: {
-            left: "10%",
-            right: "5%",
-            bottom: "15%",
-            top: "20%",
-            containLabel: true,
-        },
-        xAxis: {
-            type: "category",
-            data: regions,
-            axisLabel: {
-                color: "#b0bec5",
-                fontSize: 12,
-                rotate: 45,
-            },
-            axisLine: {
-                lineStyle: {
-                    color: "#37474f",
-                    width: 2,
-                },
-            },
-            axisTick: {
-                lineStyle: {
-                    color: "#37474f",
-                },
-            },
-        },
-        yAxis: {
-            type: "value",
-            name: "Value",
-            nameTextStyle: {
-                color: "#e0e0e0",
-                fontSize: 14,
-                fontWeight: 600,
-                padding: [0, 0, 10, 0],
-            },
-            axisLabel: {
-                color: "#b0bec5",
-                fontSize: 12,
-            },
-            axisLine: {
-                lineStyle: {
-                    color: "#37474f",
-                    width: 2,
-                },
-            },
-            axisTick: {
-                lineStyle: {
-                    color: "#37474f",
-                },
-            },
-            splitLine: {
-                lineStyle: {
-                    color: "#263238",
-                    type: "dashed",
-                    opacity: 0.5,
-                },
-            },
-        },
-        series: [
-            {
-                name: "Value",
-                type: "bar",
-                data: values,
-                barWidth: "50%",
-                itemStyle: {
-                    color: {
-                        type: "linear",
-                        x: 0,
-                        y: 0,
-                        x2: 0,
-                        y2: 1,
-                        colorStops: [
-                            { offset: 0, color: "#66bb6a" },
-                            { offset: 1, color: "#2e7d32" },
-                        ],
-                    },
-                    borderRadius: [4, 4, 0, 0],
-                    shadowColor: "rgba(76, 175, 80, 0.5)",
-                    shadowBlur: 10,
-                },
-                emphasis: {
-                    itemStyle: {
-                        shadowBlur: 20,
-                        shadowColor: "rgba(76, 175, 80, 0.7)",
-                    },
-                },
-            },
-        ],
-    };
     const testData = [
     { 'soilmoisture%': 45.2, 'soil_pH': 6.8, 'temperature_C': 24.5, 'rainfallmm': 145.3, 'humidity%': 68.5, 'sunlight_hours': 8.2, 'pesticide_usage_ml': 245.0, 'total_days': 95, 'yield_kg_per_hectare': 4250.5, 'latitude': 35.4, 'longitude': -95.2, 'NDVI_index': 0.72 },
     { 'soilmoisture%': 52.1, 'soil_pH': 7.2, 'temperature_C': 26.3, 'rainfallmm': 178.9, 'humidity%': 72.3, 'sunlight_hours': 7.8, 'pesticide_usage_ml': 280.5, 'total_days': 102, 'yield_kg_per_hectare': 4680.2, 'latitude': 34.8, 'longitude': -96.1, 'NDVI_index': 0.78 },
@@ -162,8 +27,7 @@ export const GlobalPage = () => {
 
     return (
         <>
-            <ScatterPlot data={testData}/>
-            {/* <EChartsReact className="w-128" option={option} /> */}
+            <ScatterPlot fields={kFieldTypes} data={testData}/>
         </>
     );
 };
