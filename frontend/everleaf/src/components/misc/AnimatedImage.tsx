@@ -25,7 +25,7 @@ const AnimatedImage: React.FC<AnimatedImageProps> = ({
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     return (
         <>
-        <Image unoptimized width={width} height={height} alt={alt} src={isPlaying ? animatedImage : staticImage } className={`${className}`} onMouseEnter={() => setIsPlaying(true)} onMouseLeave={() => setIsPlaying(false)}/>
+        <Image unoptimized preload width={width} height={height} alt={alt} src={isPlaying ? animatedImage : staticImage } className={`${className}`} onMouseEnter={() => setIsPlaying(true)} onMouseLeave={() => setIsPlaying(false)}/>
         </>
     )
 }

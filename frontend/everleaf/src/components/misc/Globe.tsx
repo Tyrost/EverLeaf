@@ -7,6 +7,8 @@ import { fetchFarmHealth } from "@/control/fetch/charts";
 
 export default function Globe() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const [loaded, setLoaded] = useState(false);
+
     const [markers, setMarkers] = useState<any[]>([]);
     const kSPINVELOCITY = 8;
     const size = 1000;
@@ -104,15 +106,22 @@ export default function Globe() {
         return () => globe.destroy();
     }, [markers]);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoaded(true);
+        }, 1400);
+
+        return () => clearTimeout(timer);
+    }, []);
+
     // -------------------------------------------------------
     // RENDER
     // -------------------------------------------------------
     return (
         <motion.div
             initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={loaded ? { opacity: 1, y: 0 } : { opacity: 0 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: false, amount: 0.3 }}
         >
             <canvas
                 ref={canvasRef}
