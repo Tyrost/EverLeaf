@@ -31,7 +31,7 @@ interface DataPoint {
     "total_days": number;
     "yield_kg_per_hectare": number;
     "latitude": number;
-    "longitude": number;
+    "longitude": number; 
     "NDVI_index": number;
 }
 

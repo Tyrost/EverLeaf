@@ -21,13 +21,17 @@ export const fetchScatter = async ({
             throw new Error(`HTTP error fetchScatter. Status: ${response.status}`);
         }
 
-        const scatterData: ScatterPlotFetch = await response.json();
-        return scatterData;
+        const json = await response.json();
+
+        // FIX: return only the x/y arrays
+        return json.response;
+
     } catch (error) {
         console.error("Failed to fetch scatter data:", error);
         throw error;
     }
 };
+
 
 // REGRESSION
 export const fetchRegression = async ({
