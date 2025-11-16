@@ -45,7 +45,10 @@ const LoginMainSlide = () => {
                     </div>
                     {/* Form */}
                     <div className="flex justify-center items-center w-[50%] h-full">
-                            <SignIn />
+                            <SignIn 
+                            signUpUrl={"/auth/register"}
+                            afterSignOutUrl={"/"}
+                            />
                     </div>    
                 </div>
 

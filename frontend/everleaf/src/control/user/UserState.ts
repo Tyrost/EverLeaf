@@ -1,23 +1,16 @@
+'use client';
 
-import { useState, useEffect } from "react"
-import type { User } from "../types/User";
+import { useUser as useClerkUser, useClerk } from "@clerk/nextjs";
+import type { AppUser } from "../types/User";
 
-export const useLocalUser = () => {
-    const [user, setUser] = useState<User>({
-        userName: "",
-        isLogged: false,
-        lastLogged: "",
-        userImagePath: ""
-    })
+export const useUser = (): AppUser => {
+    const { user, isLoaded, isSignedIn } = useClerkUser();
+    const { signOut } = useClerk();
 
-    useEffect(() => {
-        const stored = localStorage.getItem("app_user"); // mimic api fetch
-
-        if (stored) {
-            setUser(JSON.parse(stored));
-        }
-    }, []);
-
-    return user
-}
-
+    return {
+        user,
+        isLoaded,
+        isSignedIn,
+        signOut
+    };
+};
