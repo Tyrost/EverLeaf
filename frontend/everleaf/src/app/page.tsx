@@ -1,14 +1,17 @@
-import Image from "next/image";
-import HomePage from "@/components/pages/HomePage";
+import OpeningSlide from "@/components/slides/OpeningSlide";
 import NavBar from "@/components/navigation/NavBar";
-import HomeStats from "@/components/pages/HomeStats";
+import MissionSlide from "@/components/slides/MissionSlide";
+import FooterSlide from "@/components/slides/FooterSlide";
+import StatsSlide from "@/components/slides/StatsSlide";
 
 export default function Home() {
   return (
     <>
       <NavBar />
-      <HomePage/>
-      <HomeStats/>
+      <OpeningSlide/>
+      <StatsSlide/>
+      <MissionSlide/>
+      <FooterSlide/>
     </>
   );
 }

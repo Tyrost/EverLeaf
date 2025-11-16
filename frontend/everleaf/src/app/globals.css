@@ -25,7 +25,7 @@
 }
 /* for creating new tailwind styles */
 @theme {
-
+  --brand: oklch(76.8% 0.233 130.85);
 }
 
 
