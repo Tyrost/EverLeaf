@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit, Red_Hat_Display } from "next/font/google";
+
 import { ClerkProvider } from "@clerk/nextjs";
+
 import "./globals.css";
 import { dark } from "@clerk/themes";
 
+import { ThemeProvider } from "@/components/core/ThemeProvider";
 // Chosen Main Fonts
 
 const redhat = Red_Hat_Display({
