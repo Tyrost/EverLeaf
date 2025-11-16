@@ -36,7 +36,7 @@ export default function RootLayout({
 
   return (
 
-    <ClerkProvider afterSignInUrl={"/dashboard?page=general"} afterSignOutUrl={"/"} afterSignUpUrl={"/auth/login"}
+    <ClerkProvider afterSignInUrl={"/dashboard"} afterSignOutUrl={"/"} afterSignUpUrl={"/auth/login"}
     publishableKey={key} appearance={{ theme: dark }}>
     <html lang="en">
       <body

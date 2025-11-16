@@ -24,7 +24,7 @@ export function useRegisteredRedirect() {
 
   useEffect(() => {
     if (isSignedIn) {
-      router.push("/dashboard");
+      router.push("/dashboard?page=overview");
     }
   }, [isSignedIn]);
 
