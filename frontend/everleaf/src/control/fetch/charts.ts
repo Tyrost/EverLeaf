@@ -1,4 +1,6 @@
-import { ScatterPlotFetch, RegressionApiResponse, RegressionPlotTuple, FarmRangeTuple, RangeApiResponse, FarmHealthApiResponse, FarmHealthPoint } from "../types/Chart";
+import { ScatterPlotFetch, RegressionApiResponse, RegressionPlotTuple, 
+    FarmRangeTuple, RangeApiResponse, FarmHealthApiResponse, FarmHealthPoint,
+FarmRecord, FarmApiResponse } from "../types/Chart";
 
 const base = process.env.NEXT_PUBLIC_BASE_BACKEND_URL;
 
@@ -101,4 +103,23 @@ export const fetchFarmHealth = async (): Promise<FarmHealthPoint[]> => {
         console.error("Failed to fetch farm health data:", error);
         throw error;
     }
+};
+
+export const fetchFarm = async (farm_id: string): Promise<FarmRecord> => {
+  try {
+    const reqUrl = `${base}/api/farms/${farm_id}`;
+
+    const response = await fetch(reqUrl);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error fetchFarm. Status: ${response.status}`);
+    }
+
+    const json: FarmApiResponse = await response.json();
+
+    return json.response; // just 1 farm
+  } catch (error) {
+    console.error("Failed to fetch farm:", error);
+    throw error;
+  }
 };
