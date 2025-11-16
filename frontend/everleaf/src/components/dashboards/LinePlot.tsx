@@ -1,26 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactECharts from "echarts-for-react";
 import { CHART_COLORS } from "./CommonChartData";
-
-export interface LinePlotPoint {
-    x: number[];
-    y: number[];
-    value: number;
-}
+import { fetchRegression } from "@/control/fetch/charts";
+import { RegressionPlotTuple } from "@/control/types/Chart";
 
 interface LinePlotProps {
-    data: LinePlotPoint[];
     fields: string[];
 }
 
-export default function LinePlot({ data, fields }: LinePlotProps) {
-    const allX: number[] = data[0].x;
-    const allY: number[] = data[0].y;
+export default function LinePlot({ fields }: LinePlotProps) {
+    const [data, setData] = useState<RegressionPlotTuple | null>(null);
+    const [loading, setLoading] = useState(true);
 
     const [xType, setXType] = useState(fields[0]);
     const [yType, setYType] = useState(fields[1] ?? fields[0]);
+    const [xValue, setXValue] = useState<number>(0);
+    const [initializedX, setInitializedX] = useState(false);
+
+
+    // Initialize xValue to mean of allX only once (when data loads)
+    // set mean only when xType OR yType changes, not every regression update
+    useEffect(() => {
+        if (data && !initializedX) {
+            const meanX = Math.round(data[0].reduce((a, b) => a + b, 0) / data[0].length); 
+            setXValue(meanX);
+            setInitializedX(true);
+        }
+    }, [data, initializedX]);
+
+
+
+    // FETCH REGRESSION
+    useEffect(() => {
+        async function load() {
+            setLoading(true);
+            try {
+                const result = await fetchRegression({
+                    feature_x: xType,
+                    feature_y: yType,
+                    x_value: xValue
+                });
+
+                setData(result); // NOW RETURNS THE TUPLE DIRECTLY
+            } catch (err) {
+                console.error("Failed to load regression:", err);
+            }
+            setLoading(false);
+        }
+
+        load();
+    }, [xType, yType, xValue]);
+
+    if (loading || !data) {
+        return <div className="text-center text-primary-text">Loading regression...</div>;
+    }
+
+    // DESTRUCTURE TUPLE
+    const [allX, allY, prediction] = data;
+
+    console.log("X:", allX);
+    console.log("Y:", allY);
+    console.log("Prediction at x=50:", prediction);
 
     const option = {
         backgroundColor: "transparent",
@@ -31,8 +73,8 @@ export default function LinePlot({ data, fields }: LinePlotProps) {
             textStyle: {
                 color: CHART_COLORS.titleText,
                 fontSize: 18,
-                fontWeight: 600,
-            },
+                fontWeight: 600
+            }
         },
         tooltip: {
             trigger: "axis",
@@ -40,89 +82,30 @@ export default function LinePlot({ data, fields }: LinePlotProps) {
             backgroundColor: CHART_COLORS.tooltipBackground,
             borderColor: CHART_COLORS.tooltipBorder,
             borderWidth: 1,
-            textStyle: { color: CHART_COLORS.tooltipText },
-        },
-        grid: {
-            left: "12%",
-            right: "5%",
-            bottom: "15%",
-            top: "15%",
-            containLabel: true,
+            textStyle: { color: CHART_COLORS.tooltipText }
         },
         xAxis: {
             type: "value",
-            name: xType,
-            nameLocation: "middle",
-            nameGap: 30,
-            nameTextStyle: {
-                color: CHART_COLORS.subtleText,
-                fontSize: 13,
-                fontWeight: 600,
-            },
-            axisLabel: { color: CHART_COLORS.axisText, fontSize: 11 },
-            axisLine: { lineStyle: { color: CHART_COLORS.axisLine } },
-            splitLine: {
-                lineStyle: { color: CHART_COLORS.gridLine, type: "dashed" },
-            },
+            name: xType
         },
         yAxis: {
             type: "value",
-            name: yType,
-            nameLocation: "middle",
-            nameGap: 50,
-            nameTextStyle: {
-                color: CHART_COLORS.subtleText,
-                fontSize: 13,
-                fontWeight: 600,
-            },
-            axisLabel: { color: CHART_COLORS.axisText, fontSize: 11 },
-            axisLine: { lineStyle: { color: CHART_COLORS.axisLine } },
-            splitLine: {
-                lineStyle: { color: CHART_COLORS.gridLine, type: "dashed" },
-            },
+            name: yType
         },
         series: [
             {
                 name: "Raw Points",
                 type: "scatter",
                 data: allX.map((x, i) => [x, allY[i]]),
-                symbolSize: 8,
-                itemStyle: {
-                    color: {
-                        type: "radial",
-                        x: 0.5,
-                        y: 0.5,
-                        r: 0.5,
-                        colorStops: [
-                            { offset: 0, color: CHART_COLORS.scatterDotStart },
-                            { offset: 1, color: CHART_COLORS.scatterDotEnd },
-                        ],
-                    },
-                    opacity: 0.7,
-                    shadowBlur: 8,
-                    shadowColor: CHART_COLORS.scatterDotShadow,
-                },
-                emphasis: {
-                    itemStyle: {
-                        color: CHART_COLORS.scatterDotHover,
-                        opacity: 1,
-                        shadowBlur: 15,
-                        shadowColor: CHART_COLORS.scatterDotShadowHover,
-                    },
-                    scale: 1.5,
-                },
+                symbolSize: 8
             },
             {
                 name: "Regression Line",
                 type: "line",
-                // data: allX.map((x, i) => [x, regressionY[i]]),
-                lineStyle: {
-                    color: CHART_COLORS.titleText,
-                    width: 3,
-                },
-                symbol: "none",
-            },
-        ],
+                data: [], // add later
+                symbol: "none"
+            }
+        ]
     };
 
     return (
@@ -144,11 +127,7 @@ export default function LinePlot({ data, fields }: LinePlotProps) {
                             className="w-full px-3 py-2.5 rounded-lg border border-border bg-tertiary text-primary-text"
                         >
                             {fields.map((f) => (
-                                <option
-                                    key={f}
-                                    value={f}
-                                    disabled={f === yType}
-                                >
+                                <option key={f} value={f} disabled={f === yType}>
                                     {f}
                                 </option>
                             ))}
@@ -165,11 +144,7 @@ export default function LinePlot({ data, fields }: LinePlotProps) {
                             className="w-full px-3 py-2.5 rounded-lg border border-border bg-tertiary text-primary-text"
                         >
                             {fields.map((f) => (
-                                <option
-                                    key={f}
-                                    value={f}
-                                    disabled={f === xType}
-                                >
+                                <option key={f} value={f} disabled={f === xType}>
                                     {f}
                                 </option>
                             ))}
@@ -177,22 +152,11 @@ export default function LinePlot({ data, fields }: LinePlotProps) {
                     </div>
                 </div>
 
-                <ReactECharts
-                    option={option}
-                    style={{ height: "500px", width: "100%" }}
-                    opts={{ renderer: "canvas" }}
-                />
+                <ReactECharts option={option} style={{ height: 500 }} />
 
-                {/* Stats */}
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-4 mt-6 pt-6 border-t border-border">
-                    <div className="text-center">
-                        <div className="text-xs text-secondary-text mb-1">
-                            Points
-                        </div>
-                        <div className="text-xl font-bold text-primary-text">
-                            {allX.length}
-                        </div>
-                    </div>
+                <div className="text-center mt-6 text-primary-text">
+                    <div>Points: <strong>{allX.length}</strong></div>
+                    <div>Prediction at x=50: <strong>{prediction}</strong></div>
                 </div>
             </div>
         </div>

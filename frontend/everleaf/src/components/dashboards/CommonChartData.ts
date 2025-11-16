@@ -1,3 +1,17 @@
+export const kFieldTypes = [
+    "soil_moisture_%",
+    "soil_pH",
+    "temperature_C",
+    "rainfallmm",
+    "humidity%",
+    "sunlight_hours",
+    "pesticide_usage_ml",
+    "total_days",
+    "yield_kg_per_hectare",
+    "latitude",
+    "longitude",
+    "NDVI_index",
+];
 export enum DataTypeEnum {
     SoilMoisturePercent = "soil_moisture_%",
     SoilPH = "soil_pH",
