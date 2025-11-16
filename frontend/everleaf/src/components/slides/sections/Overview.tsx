@@ -26,7 +26,7 @@ export const OverviewPage = () => {
                 {/* Hero Panel */}
                 <div className="text-center flex flex-col justify-center items-center 
                         w-[80%] border border-white/20 rounded-lg bg-secondary py-8 mb-10 mt-[50px]">
-                    <h1 className="flex justify-center items-center font-outfit text-[48px] font-light text-green-500">
+                    <h1 className="flex justify-center items-center font-outfit text-[48px] font-bold text-brand">
                         EverLeaf
                         <span className="mx-5 items-center text-[24px] border border-white/10 p-3 text-white 
                                  bg-zinc-800 rounded-lg">
@@ -54,7 +54,7 @@ export const OverviewPage = () => {
                     <div className="flex flex-col p-5 font-outfit text-center 
                             border border-white/20 rounded-md bg-secondary 
                             w-[30%] text-zinc-400">
-                        <span className="text-[50px] font-[200] text-green-300">
+                        <span className="text-[50px] font-[200] text-green-200">
                             {activeUsers}
                         </span>
                         Active Users
@@ -64,7 +64,7 @@ export const OverviewPage = () => {
                     <div className="flex flex-col p-5 font-outfit text-center 
                             border border-white/20 rounded-md bg-secondary 
                             w-[30%] text-zinc-400">
-                        <span className="text-[50px] font-[200] text-green-300">
+                        <span className="text-[50px] font-[200] text-green-200">
                             {farms}
                         </span>
                         Registered Farms
@@ -74,7 +74,7 @@ export const OverviewPage = () => {
                     <div className="flex flex-col p-5 font-outfit text-center 
                             border border-white/20 rounded-md bg-secondary
                             w-[30%] text-zinc-400">
-                        <span className="text-[50px] font-[200] text-green-300">
+                        <span className="text-[50px] font-[200] text-green-200">
                             {uptime}
                         </span>
                         Uptime
