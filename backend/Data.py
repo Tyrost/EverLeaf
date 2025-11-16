@@ -77,7 +77,7 @@ class Data:
         predictive_vals = []
         predicted_vals = []
 
-        step_up = (max(x) - min(x)) * 0.03
+        step_up = (max(x) - min(x)) * 0.1
         bound = predict(max(x)) * 1.20
 
         current_x = x_value
@@ -99,4 +99,3 @@ class Data:
     def set_ranges(self, feature_x):
         return [np.min(self.farm_df[feature_x]), np.max(self.farm_df[feature_x]) * 1.5]
     
-print(Data().linear_regression("NDVI_index", "yield_kg_per_hectare", 150))
