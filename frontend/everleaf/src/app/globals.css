@@ -25,7 +25,9 @@
 }
 /* for creating new tailwind styles */
 @theme {
-  --color-brand: oklch(0.723 0.219 150.24)
+  --color-brand: oklch(0.723 0.219 150.24);
+  --color-neutral-750: oklch(30.7% 0 0);
+  --color-neutral-850: oklch(23.7% 0 0);
 }
 
 
