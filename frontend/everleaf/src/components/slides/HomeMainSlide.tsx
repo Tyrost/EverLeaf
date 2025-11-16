@@ -1,6 +1,6 @@
 import Globe from "../misc/Globe";
 
-export default function HomePage() {
+export default function HomeMainSlide() {
     return (
         <>
             <div className="">

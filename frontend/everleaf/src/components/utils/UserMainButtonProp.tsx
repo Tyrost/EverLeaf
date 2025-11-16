@@ -1,13 +1,13 @@
 'use client';
 
-import {useUser} from "@/control/user/UserState"
+import {useLocalUser} from "@/control/user/UserState"
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import UserMainPanelProp from "./UserMainButtonPanelProp";
 
 const UserMainButtonProp = () => {
     const [open, setOpen] = useState(false);
-    const { isLogged, userImagePath } = useUser()
+    const { isLogged, userImagePath } = useLocalUser()
     const ref = useRef<HTMLDivElement>(null);
 
     const photoPath = !isLogged ? "/misc/!loggedUser.png" : userImagePath

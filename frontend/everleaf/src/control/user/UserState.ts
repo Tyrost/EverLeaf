@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react"
 import type { User } from "../types/User";
 
-export const useUser = () => {
+export const useLocalUser = () => {
     const [user, setUser] = useState<User>({
         userName: "",
         isLogged: false,
@@ -20,3 +20,4 @@ export const useUser = () => {
 
     return user
 }
+
