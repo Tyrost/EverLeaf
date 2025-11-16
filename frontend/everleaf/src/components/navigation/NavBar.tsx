@@ -11,7 +11,7 @@ const NavBar = () => {
 
     return (
         <>
-        <div className="fixed absolute top-0 w-full h-[100px] backdrop-blur-lg bg-white/10 z-10">
+        <div className="fixed absolute top-0 w-full h-[100px] backdrop-blur-lg bg-white/10 z-10 border-b border-white/15">
         <div className="flex flex-cols h-full items-center">
             <div className="flex w-full p-5 gap-x-[2%] justify-left">
                 <EverLeafLogo/>
@@ -23,9 +23,6 @@ const NavBar = () => {
                 <UserMainButtonProp/>
             </div>
         </div>
-
-
-
         </div>
         </>
     );

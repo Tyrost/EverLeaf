@@ -1,13 +1,18 @@
 "use client";
 
+
 import createGlobe from "cobe";
 import { useEffect, useRef } from "react";
+import { motion } from "motion/react";
 
 export default function Globe() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const kSPINVELOCITY: number = 4;
 
-    let size = 1000
+    let size = 1000;
+
+    // the colors for markers on the home should be
+    // lime-500 yellow-500 orange-600 and maybe red-800
 
     useEffect(() => {
         if (!canvasRef.current) return;
@@ -18,8 +23,8 @@ export default function Globe() {
             devicePixelRatio: 2,
             // imma be honest this size doesnt seem to matter...
             // its the size declared in the className via tailwind
-            width: size*2,
-            height: size*2,
+            width: size * 2,
+            height: size * 2,
             phi: 0,
             theta: 0.50,
             dark: 1,
@@ -43,9 +48,19 @@ export default function Globe() {
             globe.destroy();
         };
     }, []);
-
     return (
-        // must share the same number!
-        <canvas ref={canvasRef} style={{ width: `${size}px`, height: `${size}px` }}/>
+        <>
+            <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: false, amount: 0.3 }}
+            >
+                <canvas
+                    ref={canvasRef}
+                    style={{ width: `${size}px`, height: `${size}px` }}
+                />
+            </motion.div>
+        </>
     );
 }
