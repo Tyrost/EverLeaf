@@ -5,8 +5,7 @@ import BarChartOne from "./widgets/Chart"
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-const DataSummaryPanel = () => {
-
+const GlobalSummaryPanel = () => {
     // default dummy value for now
     const currentYear = new Date().getFullYear()
     const [year, changeYear] = useState(currentYear)
@@ -91,4 +90,4 @@ const DataSummaryPanel = () => {
     )
 }
 
-export default DataSummaryPanel
+export default GlobalSummaryPanel
