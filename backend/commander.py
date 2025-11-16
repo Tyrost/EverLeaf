@@ -25,23 +25,17 @@ class Commander(Connection):
             user.pop("_id", None)
         return user
 
-    def create_user(self, user_id, data):
+    def create_user(self, user_id, username):
         existing = self.users.find_one({"user_id": user_id})
         if existing:
             return {"error": "User already exists"}, 409
 
-        # ensure data is a dict
-        form_data = data or {}
-
-        user_doc = {"user_id": user_id}
-
-        for field in FARM_FIELDS:
-            user_doc[field] = form_data.get(field, None)
-
-        self.users.insert_one(user_doc)
-
+        self.users.insert_one({
+            "user_id": user_id,
+            "username": username
+        })
+        
         return {"message": "Profile created", "userId": user_id}, 200
-
 
     # Farm Routes
     def get_all_farms(self):
@@ -68,78 +62,6 @@ class Commander(Connection):
         if farm:
             farm.pop("_id", None)
         return farm
-    
-    def get_farms_health(self):
-        farms_raw = list(self.farming_data.find({}, {"_id": 0}))
-
-        farms = []
-        deviations = []
-
-        for farm in farms_raw:
-            lon = farm.get("longitude")
-            lat = farm.get("latitude")
-
-            # TODO: Compute Deviation
-            deviation = 0
-
-            farms.append({
-                "longitude": lon,
-                "latitude": lat,
-                "deviation": deviation
-            })
-
-            deviations.append(deviation)
-
-        # TODO: Compute Cutoff
-        cutoff = 0
-
-        return {
-            "farms": farms,
-            "cutoff": cutoff
-        }
-    
-    def get_farm_field(self, field):
-        #
-        # TODO
-        # TODO
-        # TODO
-        #
-        pass
-
-    def get_range(self, parameter):
-        #
-        # TODO
-        # TODO
-        # TODO
-        #
-        pass
-
-    def get_regression(self, field_list):
-        #
-        # TODO
-        # TODO
-        # TODO
-        #
-        pass
-
-    def get_farm_params(self, field_list):
-        f1, f2 = field_list[0], field_list[1]
-
-        projection = {f1: 1, f2: 1, "_id": 0}
-
-        cursor = self.farming_data.find({}, projection)
-        results = list(cursor)
-
-        output = {
-            "x": [],
-            "y": []
-        }
-
-        for doc in results:
-            output["x"].append(doc.get(f1))
-            output["y"].append(doc.get(f2))
-
-        return output
     
     def create_farm(self, farm_data):
         farm_id = self.generate_farm_id()
